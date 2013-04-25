@@ -1,3 +1,4 @@
+require "virtus"
 require "scorm/version"
 
 module Scorm
