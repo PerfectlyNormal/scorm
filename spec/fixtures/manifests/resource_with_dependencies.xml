@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest identifier="valid-resource" version="1.0" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>2004 4th Edition</schemaversion>
+  </metadata>
+  <resources>
+    <resource identifier="RES"
+              type="webcontent"
+              href="example.html"
+              xml:base="http://localhost/"
+              adlcp:scormType="sco">
+      <file href="example.html"/>
+      <file href="example.jpg"/>
+      <dependency identifierref="assets"/>
+    </resource>
+    <resource identifier="assets" type="webcontent" adlcp:scormType="asset">
+      <file href="assets/logo.png"/>
+    </resource>
+  </resources>
+</manifest>
