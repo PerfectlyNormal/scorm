@@ -85,4 +85,8 @@ class Scorm::Organization
   def valid?
     identifier.to_s.strip != ""
   end
+
+  def to_s
+    "<Organization:#{identifier} structure='#{structure}'>"
+  end
 end

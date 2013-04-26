@@ -17,9 +17,19 @@ end
 manifest = Scorm::Manifest.parse(File.read(file))
 
 puts ". #{file}"
-line manifest.metadata, manifest.resources.empty?
+line manifest.metadata, manifest.organizations.empty? && manifest.resources.empty?
+unless manifest.organizations.empty?
+  line "<Organizations>", manifest.resources.empty?
+  manifest.organizations.each_with_index do |org, org_index|
+    last_organization = org_index == (manifest.organizations.length-1)
+    arm = manifest.resources.empty? ? "     " : "│    "
+
+    line org, last_organization, arm
+  end
+end
+
 unless manifest.resources.empty?
-  line "Resources", true
+  line "<Resources>", true
   $level += 1
 
   manifest.resources.each_with_index do |resource, res_index|
