@@ -41,6 +41,10 @@ class Scorm::Resource
       instance
     end
 
+    def to_s
+      "<Dependency #{identifierref}>"
+    end
+
     attribute :identifierref, String
   end
 end

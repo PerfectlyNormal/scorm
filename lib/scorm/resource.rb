@@ -116,6 +116,10 @@ class Scorm::Resource
   attribute :dependencies, Array[Scorm::Resource::Dependency]
   attribute :files, Array[Scorm::Resource::File]
 
+  def to_s
+    "<Resource:#{identifier} #{adlcp_scorm_type} type='#{type}' href='#{href}'>"
+  end
+
   def valid?
     identifier.to_s != "" &&
       type.to_s != "" &&

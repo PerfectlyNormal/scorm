@@ -65,6 +65,10 @@ class Scorm::Resource
 
     attribute :href, String
 
+    def to_s
+      "<File #{href}>"
+    end
+
     def valid?
       href.to_s != ""
     end
