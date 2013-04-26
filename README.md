@@ -37,6 +37,11 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## About
+
+Created and maintained by Per Christian B. Viken (perchr@northblue.org).
+Released under the MIT license.
+
 ## Contributing
 
 1. Fork it
