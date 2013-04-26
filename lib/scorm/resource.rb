@@ -109,10 +109,10 @@ class Scorm::Resource
   end
 
   attribute :identifier, String
-  attribute :type, String
-  attribute :href, String
+  attribute :type, String, default: "webcontent"
+  attribute :href, String, default: ""
   attribute :xml_base, String # FIXME: Would like to just use a URI here
-  attribute :adlcp_scorm_type, String
+  attribute :adlcp_scorm_type, String, default: "sco"
   attribute :dependencies, Array[Scorm::Resource::Dependency]
   attribute :files, Array[Scorm::Resource::File]
 
