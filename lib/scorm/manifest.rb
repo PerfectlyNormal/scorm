@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'forwardable'
 require 'scorm/manifest/metadata'
 require 'scorm/resource'
 
