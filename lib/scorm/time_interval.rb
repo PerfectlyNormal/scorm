@@ -49,7 +49,7 @@ module Scorm
     end
 
     def self.from_seconds(seconds)
-      raise InvalidFormat.new("Not a number: #{seconds}")   if !seconds.to_f
+      raise InvalidFormat.new("Not a number: #{seconds}")   if !seconds.respond_to?(:to_f)
       raise InvalidFormat.new("Seconds cannot be negative") if seconds.to_f < 0
 
       interval  = new

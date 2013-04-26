@@ -39,7 +39,7 @@ describe Scorm::TimeInterval do
     end
 
     it "should raise an error when given something that can't be turned into a number" do
-      expect { Scorm::TimeInterval.from_seconds(nil) }.to raise_error(Scorm::TimeInterval::InvalidFormat)
+      expect { Scorm::TimeInterval.from_seconds(Scorm) }.to raise_error(Scorm::TimeInterval::InvalidFormat)
     end
 
     it "should parse years correctly" do
