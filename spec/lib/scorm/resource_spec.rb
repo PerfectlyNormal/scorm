@@ -31,7 +31,24 @@ describe Scorm::Resource do
 
       it "should parse metadata"
       it "should parse files"
-      it "should parse dependencies"
+      describe "parsing dependencies" do
+        let(:resource_doc) {
+          xml_scorm_manifest("resource_with_dependencies").xpath(
+            "/xmlns:manifest/xmlns:resources/xmlns:resource"
+          )[0]
+        }
+        let(:resource) { Scorm::Resource.from_xml(resource_doc) }
+
+        it "should have 1 dependency" do
+          resource.dependencies.should_not be_empty
+          resource.dependencies.length.should eq(1)
+        end
+
+        it "should have been parsed correctly" do
+          resource.dependencies[0].identifierref.should eq("assets")
+        end
+
+      end
     end
   end
 
@@ -91,5 +108,9 @@ describe Scorm::Resource do
     #   resource.type = "something-strange"
     #   resource.should_not be_valid
     # end
+
+    describe "with dependencies" do
+      it "should only be valid if the dependencies are valid"
+    end
   end
 end

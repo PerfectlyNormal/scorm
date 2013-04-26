@@ -97,6 +97,9 @@ class Scorm::Resource
     instance.href             = data.attr("href")
     instance.xml_base         = data.attr("xml:base")
     instance.adlcp_scorm_type = data.attr("adlcp:scormType")
+    data.xpath("xmlns:dependency").each do |dependency|
+      instance.dependencies.push Scorm::Resource::Dependency.from_xml(dependency)
+    end
 
     instance
   end
@@ -106,6 +109,7 @@ class Scorm::Resource
   attribute :href, String
   attribute :xml_base, String # FIXME: Would like to just use a URI here
   attribute :adlcp_scorm_type, String
+  attribute :dependencies, Array[Scorm::Resource::Dependency]
 
   def valid?
     identifier.to_s != "" &&
