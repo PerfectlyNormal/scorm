@@ -87,6 +87,7 @@ require 'uri'
 #
 class Scorm::Resource
   include Virtus
+  VALID_SCORM_TYPES = ['sco', 'asset'].freeze
 
   def self.from_xml(data)
     instance = new
@@ -104,4 +105,11 @@ class Scorm::Resource
   attribute :href, String
   attribute :xml_base, String # FIXME: Would like to just use a URI here
   attribute :adlcp_scormtype, String
+
+  def valid?
+    identifier.to_s != "" &&
+      type.to_s != "" &&
+      adlcp_scormtype != "" &&
+      VALID_SCORM_TYPES.include?(adlcp_scormtype)
+  end
 end
