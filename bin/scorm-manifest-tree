@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+$:.unshift 'lib'
+
+require 'scorm'
+
+file = ARGV[0]
+abort "Usage: #{$0} <imsmanifest.xml>" if !file
+abort "File #{file} not found, or not readable" unless File.readable?(file)
+
+$level = 0
+
+def line(str, last = false, arm = "")
+  puts "#{"    " * $level}#{arm}#{last ? "└" : "├"}── #{str}"
+end
+
+manifest = Scorm::Manifest.parse(File.read(file))
+
+puts ". #{file}"
+line manifest.metadata, manifest.resources.empty?
+unless manifest.resources.empty?
+  line "Resources", true
+  $level += 1
+
+  manifest.resources.each_with_index do |resource, res_index|
+    last_resource = res_index == (manifest.resources.length-1)
+    line resource, last_resource
+
+    descendants = [resource.files, resource.dependencies].flatten
+    descendants.each_with_index do |descendant, des_index|
+      arm = last_resource ? "     " : "│    "
+      last_descendant = des_index == (descendants.length-1)
+      line descendant, last_descendant, arm
+    end
+  end
+end
