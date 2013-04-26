@@ -81,4 +81,8 @@ class Scorm::Organization
   attribute :structure,  String, default: "hierarchical"
   attribute :adlseq_objectives_global_to_system, Boolean, default: true
   attribute :adlcp_shared_data_global_to_system, Boolean, default: true
+
+  def valid?
+    identifier.to_s.strip != ""
+  end
 end

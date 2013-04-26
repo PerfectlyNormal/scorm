@@ -44,4 +44,14 @@ describe Scorm::Organization do
   it "defaults to 'true' for adlcp:sharedDataGlobalToSystem" do
     Scorm::Organization.new.adlcp_shared_data_global_to_system.should be_true
   end
+
+  describe "#valid?" do
+    it "should be valid with an identifier" do
+      org = Scorm::Organization.new
+      org.should_not be_valid
+
+      org.identifier = "my-first-organization"
+      org.should be_valid
+    end
+  end
 end
