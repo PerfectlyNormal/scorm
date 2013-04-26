@@ -1,5 +1,6 @@
 require 'uri'
 require 'scorm/resource/dependency'
+require 'scorm/resource/file'
 
 # 3.4.1.23. <resource> Element
 #
