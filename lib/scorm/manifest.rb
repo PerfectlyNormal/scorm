@@ -2,13 +2,15 @@ require 'nokogiri'
 require 'scorm/manifest/metadata'
 
 class Scorm::Manifest
-  class InvalidManifest < RuntimeError; end
+  class InvalidManifest         < RuntimeError; end
   class UnsupportedSCORMVersion < RuntimeError; end
+  class InvalidSCORMVersion     < RuntimeError; end
 
   include Virtus
   extend Forwardable
 
-  SUPPORTED_SCORM_VERSIONS = ["2004 4th Edition"]
+  VALID_SCORM_VERSIONS     = ['2004 4th Edition', '2004 3rd Edition', 'CAM 1.3', '1.2']
+  SUPPORTED_SCORM_VERSIONS = ['2004 4th Edition']
 
   def self.parse(data)
     # Basic sanity check
@@ -28,11 +30,6 @@ class Scorm::Manifest
     doc = Nokogiri::XML(data, "utf-8") { |config| config.nonet }
     self.identifier = doc.root.attr("identifier")
     self.metadata   = Scorm::Manifest::Metadata.from_xml(doc.xpath('/xmlns:manifest/xmlns:metadata'))
-
-    if metadata.schema != "ADL SCORM" ||
-      !SUPPORTED_SCORM_VERSIONS.include?(metadata.schemaversion)
-      raise UnsupportedSCORMVersion.new("#{metadata.schema} #{metadata.schemaversion} is not a supported SCORM version.")
-    end
 
     self
   end

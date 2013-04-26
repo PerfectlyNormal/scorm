@@ -10,4 +10,24 @@ describe Scorm::Manifest::Metadata do
       metadata.schemaversion.should eq("2004 4th Edition")
     end
   end
+
+  describe "#validate!" do
+    describe "with invalid data" do
+      it "should raise an exception" do
+        doc = xml_scorm_manifest("invalid_scorm_version")
+        expect {
+          Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+        }.to raise_error(Scorm::Manifest::InvalidSCORMVersion)
+      end
+    end
+
+    describe "with unsupported data" do
+      it "should raise an exception" do
+        doc = xml_scorm_manifest("version_scorm_1.2")
+        expect {
+         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+        }.to raise_error(Scorm::Manifest::UnsupportedSCORMVersion)
+      end
+    end
+  end
 end
