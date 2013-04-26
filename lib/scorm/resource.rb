@@ -91,11 +91,11 @@ class Scorm::Resource
 
   def self.from_xml(data)
     instance = new
-    instance.identifier      = data.attr("identifier")
-    instance.type            = data.attr("type")
-    instance.href            = data.attr("href")
-    instance.xml_base        = data.attr("xml:base")
-    instance.adlcp_scormtype = data.attr("adlcp:scormtype")
+    instance.identifier       = data.attr("identifier")
+    instance.type             = data.attr("type")
+    instance.href             = data.attr("href")
+    instance.xml_base         = data.attr("xml:base")
+    instance.adlcp_scorm_type = data.attr("adlcp:scormType")
 
     instance
   end
@@ -104,12 +104,12 @@ class Scorm::Resource
   attribute :type, String
   attribute :href, String
   attribute :xml_base, String # FIXME: Would like to just use a URI here
-  attribute :adlcp_scormtype, String
+  attribute :adlcp_scorm_type, String
 
   def valid?
     identifier.to_s != "" &&
       type.to_s != "" &&
-      adlcp_scormtype != "" &&
-      VALID_SCORM_TYPES.include?(adlcp_scormtype)
+      adlcp_scorm_type != "" &&
+      VALID_SCORM_TYPES.include?(adlcp_scorm_type)
   end
 end

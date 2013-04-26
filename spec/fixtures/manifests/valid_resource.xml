@@ -9,7 +9,7 @@
               type="webcontent"
               href="example.html"
               xml:base="http://localhost/"
-              adlcp:scormtype="sco">
+              adlcp:scormType="sco">
       <file href="example.html"/>
       <file href="example.jpg"/>
     </resource>

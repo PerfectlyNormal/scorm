@@ -21,8 +21,8 @@ describe Scorm::Resource do
         resource.href.should eq("example.html")
       end
 
-      it "should set adlcp:scormtype" do
-        resource.adlcp_scormtype.should eq("sco")
+      it "should set adlcp:scormType" do
+        resource.adlcp_scorm_type.should eq("sco")
       end
 
       it "should set xml:base" do
@@ -66,18 +66,18 @@ describe Scorm::Resource do
     end
 
     it "should require adlcp:scormType to be present" do
-      resource.adlcp_scormtype = ""
+      resource.adlcp_scorm_type = ""
       resource.should_not be_valid
     end
 
     it "should require adlcp:scormType to be set to 'sco' or 'asset'" do
-      resource.adlcp_scormtype = "sco"
+      resource.adlcp_scorm_type = "sco"
       resource.should be_valid
 
-      resource.adlcp_scormtype = "asset"
+      resource.adlcp_scorm_type = "asset"
       resource.should be_valid
 
-      resource.adlcp_scormtype = "whatisthis"
+      resource.adlcp_scorm_type = "whatisthis"
       resource.should_not be_valid
     end
 
