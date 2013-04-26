@@ -7,8 +7,6 @@ class Scorm::Manifest
       instance.schema        = document.xpath("xmlns:schema").text
       instance.schemaversion = document.xpath("xmlns:schemaversion").text
 
-      instance.validate!
-
       instance
     end
 
@@ -23,6 +21,8 @@ class Scorm::Manifest
       raise Scorm::Manifest::UnsupportedSCORMVersion.new(
         "#{to_s} is not a supported SCORM version"
       ) unless supported_schemaversion?
+
+      self
     end
 
     def valid_schema?

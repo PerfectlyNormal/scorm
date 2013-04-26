@@ -16,7 +16,7 @@ describe Scorm::Manifest::Metadata do
       it "should raise an exception" do
         doc = xml_scorm_manifest("invalid_scorm_version")
         expect {
-          Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+          Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata")).validate!
         }.to raise_error(Scorm::Manifest::InvalidSCORMVersion)
       end
     end
@@ -25,7 +25,7 @@ describe Scorm::Manifest::Metadata do
       it "should raise an exception" do
         doc = xml_scorm_manifest("version_scorm_1.2")
         expect {
-         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata")).validate!
         }.to raise_error(Scorm::Manifest::UnsupportedSCORMVersion)
       end
     end
