@@ -9,6 +9,14 @@ describe Scorm::Manifest::Metadata do
       metadata.schema.should eq("ADL SCORM")
       metadata.schemaversion.should eq("2004 4th Edition")
     end
+
+    it "returns an invalid instance if given invalid or no input" do
+      doc = xml_scorm_manifest("no_metadata")
+      metadata = Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+      metadata.schema.should eq("")
+      metadata.schemaversion.should eq("")
+      metadata.valid?.should be_false
+    end
   end
 
   describe "#validate!" do
