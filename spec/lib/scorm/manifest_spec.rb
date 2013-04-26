@@ -43,4 +43,11 @@ describe Scorm::Manifest do
     manifest.resources.length.should eq(1)
     manifest.resources[0].should be_a(Scorm::Resource)
   end
+
+  it "should parse each defined organization" do
+    manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
+    manifest.organizations.should_not be_empty
+    manifest.organizations.length.should eq(1)
+    manifest.organizations[0].should be_a(Scorm::Organization)
+  end
 end

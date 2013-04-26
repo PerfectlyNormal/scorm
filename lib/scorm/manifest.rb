@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'forwardable'
 require 'scorm/manifest/metadata'
+require 'scorm/organization'
 require 'scorm/resource'
 
 class Scorm::Manifest
@@ -22,6 +23,7 @@ class Scorm::Manifest
   attribute :identifier, String
   attribute :metadata, Scorm::Manifest::Metadata
   attribute :resources, Array[Scorm::Resource]
+  attribute :organizations, Array[Scorm::Organization]
 
   def_delegators :metadata, :schema, :schemaversion
 
@@ -31,6 +33,9 @@ class Scorm::Manifest
     self.metadata   = Scorm::Manifest::Metadata.from_xml(doc.xpath('/xmlns:manifest/xmlns:metadata')).validate!
     doc.xpath("/xmlns:manifest/xmlns:resources/xmlns:resource").each do |resource|
       self.resources.push Scorm::Resource.from_xml(resource)
+    end
+    doc.xpath("/xmlns:manifest/xmlns:organizations/xmlns:organization").each do |org|
+      self.organizations.push Scorm::Organization.from_xml(org)
     end
 
     self
