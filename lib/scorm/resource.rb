@@ -101,6 +101,9 @@ class Scorm::Resource
     data.xpath("xmlns:dependency").each do |dependency|
       instance.dependencies.push Scorm::Resource::Dependency.from_xml(dependency)
     end
+    data.xpath("xmlns:file").each do |file|
+      instance.files.push Scorm::Resource::File.from_xml(file)
+    end
 
     instance
   end
@@ -111,6 +114,7 @@ class Scorm::Resource
   attribute :xml_base, String # FIXME: Would like to just use a URI here
   attribute :adlcp_scorm_type, String
   attribute :dependencies, Array[Scorm::Resource::Dependency]
+  attribute :files, Array[Scorm::Resource::File]
 
   def valid?
     identifier.to_s != "" &&

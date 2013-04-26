@@ -30,7 +30,26 @@ describe Scorm::Resource do
       end
 
       it "should parse metadata"
-      it "should parse files"
+      describe "parsing files" do
+        let(:resource_doc) {
+          xml_scorm_manifest("resource_with_dependencies").xpath(
+            "/xmlns:manifest/xmlns:resources/xmlns:resource"
+          )[0]
+        }
+        let(:resource) { Scorm::Resource.from_xml(resource_doc) }
+
+        it "should have 2 files" do
+          resource.files.should_not be_empty
+          resource.files.length.should eq(2)
+        end
+
+        it "should have been parsed correctly" do
+          hrefs = resource.files.collect(&:href)
+          hrefs.should include("example.html")
+          hrefs.should include("example.jpg")
+        end
+      end
+
       describe "parsing dependencies" do
         let(:resource_doc) {
           xml_scorm_manifest("resource_with_dependencies").xpath(
@@ -111,6 +130,10 @@ describe Scorm::Resource do
 
     describe "with dependencies" do
       it "should only be valid if the dependencies are valid"
+    end
+
+    describe "with files" do
+      it "should only be valid if the files is valid"
     end
   end
 end
