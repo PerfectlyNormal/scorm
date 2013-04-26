@@ -1,8 +1,23 @@
 # Scorm
 
 SCORM is a gem implementing bits and pieces of the SCORM 2004 4th Edition
-specification. The eventual goal is to support it all, but that might take a
+specification. The eventual goal is to support it all, but that will take a
 while.
+
+This gem has gathered some inspiration from the [gem by
+mindset](https://github.com/mindset/scorm), but is being made anew.
+
+## Main Goals:
+
+1. Parse SCORM packages and create a representation of everything useful.
+2. Write the manifest and all associated files to disk, creating a SCORM package
+   suitable for redistribution
+3. Handle the RTE-bits, so the library can be used as a backend/basis for a
+   full-featured LMS.
+
+## Additional Goals:
+
+1. Support the older versions of the standards for maximum compatibility.
 
 ## Installation
 
