@@ -1,3 +1,4 @@
+require 'nokogiri'
 require 'virtus'
 
 def scorm_manifest(name)

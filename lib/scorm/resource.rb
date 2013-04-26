@@ -1,3 +1,5 @@
+require 'uri'
+
 # 3.4.1.23. <resource> Element
 #
 # The <resource> element is a reference to a resource.
@@ -57,7 +59,7 @@
 #     on xml:base usage requirements and guidance.
 #
 #     The value has an SPM of 2000 characters.
-#     The SPM represents the length of the href with the values of any xml:base applied to it. 
+#     The SPM represents the length of the href with the values of any xml:base applied to it.
 #     XML Data Type: xs:string.
 #
 #  * xml:base (optional):
@@ -84,5 +86,22 @@
 #   * <dependency>
 #
 class Scorm::Resource
+  include Virtus
 
+  def self.from_xml(data)
+    instance = new
+    instance.identifier      = data.attr("identifier")
+    instance.type            = data.attr("type")
+    instance.href            = data.attr("href")
+    instance.xml_base        = data.attr("xml:base")
+    instance.adlcp_scormtype = data.attr("adlcp:scormtype")
+
+    instance
+  end
+
+  attribute :identifier, String
+  attribute :type, String
+  attribute :href, String
+  attribute :xml_base, String # FIXME: Would like to just use a URI here
+  attribute :adlcp_scormtype, String
 end
