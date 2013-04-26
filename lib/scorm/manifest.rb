@@ -3,6 +3,8 @@ require 'scorm/manifest/metadata'
 
 class Scorm::Manifest
   class InvalidManifest         < RuntimeError; end
+  class NoMetadataError         < InvalidManifest; end
+  class DuplicateMetadataError  < InvalidManifest; end
   class UnsupportedSCORMVersion < RuntimeError; end
   class InvalidSCORMVersion     < RuntimeError; end
 

@@ -10,12 +10,25 @@ describe Scorm::Manifest::Metadata do
       metadata.schemaversion.should eq("2004 4th Edition")
     end
 
-    it "returns an invalid instance if given invalid or no input" do
+    it "should raise an exception if no metadata element exists" do
       doc = xml_scorm_manifest("no_metadata")
-      metadata = Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      metadata.schema.should eq("")
-      metadata.schemaversion.should eq("")
-      metadata.valid?.should be_false
+      expect {
+        Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+      }.to raise_error(Scorm::Manifest::NoMetadataError)
+    end
+
+    it "should raise an exception if there are more than one metadata element" do
+      doc = xml_scorm_manifest("duplicate_metadata")
+      expect {
+        Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+      }.to raise_error(Scorm::Manifest::DuplicateMetadataError)
+    end
+
+    it "should not raise an exception when there is only one metadata element" do
+      doc = xml_scorm_manifest("version_scorm_2004_4th")
+      expect {
+        Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
+      }.to_not raise_error(Scorm::Manifest::InvalidManifest)
     end
   end
 

@@ -3,6 +3,13 @@ class Scorm::Manifest
     include Virtus
 
     def self.from_xml(document)
+      raise Scorm::Manifest::NoMetadataError.new(
+        "<metadata> must appear once, but was not found"
+      ) if document.length == 0
+      raise Scorm::Manifest::DuplicateMetadataError.new(
+       "<metadata> can only appear once, but was found #{document.length} times"
+      ) if document.length > 1
+
       instance = new
       instance.schema        = document.xpath("xmlns:schema").text
       instance.schemaversion = document.xpath("xmlns:schemaversion").text
