@@ -10,9 +10,21 @@ class Scorm::Manifest
        "<metadata> can only appear once, but was found #{document.length} times"
       ) if document.length > 1
 
+      # <schema> and <schemaversion> must appear once, and only once.
+      # Verify this.
+      schema        = document.xpath("xmlns:schema")
+      schemaversion = document.xpath("xmlns:schemaversion")
+      [schema, schemaversion].each do |tag|
+        raise Scorm::Manifest::InvalidManifest.new(
+          "<#{tag.name}> must appear once, and only once, inside the <metadata> tag.
+           Was found #{tag.length} times"
+        ) if tag.length != 1
+      end
+
       instance = new
-      instance.schema        = document.xpath("xmlns:schema").text
-      instance.schemaversion = document.xpath("xmlns:schemaversion").text
+      instance.schema        = schema.text
+      instance.schemaversion = schemaversion.text
+      # FIXME: Needs to read more elements, <lom> among others
 
       instance
     end
