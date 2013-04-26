@@ -117,7 +117,7 @@ class Scorm::Resource
   attribute :files, Array[Scorm::Resource::File]
 
   def to_s
-    "<Resource:#{identifier} #{adlcp_scorm_type} type='#{type}' href='#{href}'>"
+    "<Resource:#{identifier} #{adlcp_scorm_type} type='#{type}'#{" href='#{href}'" if href.to_s != ""}>"
   end
 
   def valid?
