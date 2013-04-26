@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'scorm/manifest/metadata'
+require 'scorm/resource'
 
 class Scorm::Manifest
   class InvalidManifest         < RuntimeError; end
@@ -25,6 +26,7 @@ class Scorm::Manifest
 
   attribute :identifier, String
   attribute :metadata, Scorm::Manifest::Metadata
+  attribute :resources, Array[Scorm::Resource]
 
   def_delegators :metadata, :schema, :schemaversion
 
@@ -32,6 +34,9 @@ class Scorm::Manifest
     doc = Nokogiri::XML(data, "utf-8") { |config| config.nonet }
     self.identifier = doc.root.attr("identifier")
     self.metadata   = Scorm::Manifest::Metadata.from_xml(doc.xpath('/xmlns:manifest/xmlns:metadata')).validate!
+    doc.xpath("/xmlns:manifest/xmlns:resources/xmlns:resource").each do |resource|
+      self.resources.push Scorm::Resource.from_xml(resource)
+    end
 
     self
   end

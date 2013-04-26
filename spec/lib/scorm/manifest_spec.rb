@@ -36,4 +36,11 @@ describe Scorm::Manifest do
       manifest.schemaversion.should eq("2004 4th Edition")
     end
   end
+
+  it "should parse each defined resource" do
+    manifest = Scorm::Manifest.parse(scorm_manifest("valid_resource"))
+    manifest.resources.should_not be_empty
+    manifest.resources.length.should eq(1)
+    manifest.resources[0].should be_a(Scorm::Resource)
+  end
 end
