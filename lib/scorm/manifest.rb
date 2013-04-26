@@ -29,7 +29,7 @@ class Scorm::Manifest
   def load(data)
     doc = Nokogiri::XML(data, "utf-8") { |config| config.nonet }
     self.identifier = doc.root.attr("identifier")
-    self.metadata   = Scorm::Manifest::Metadata.from_xml(doc.xpath('/xmlns:manifest/xmlns:metadata'))
+    self.metadata   = Scorm::Manifest::Metadata.from_xml(doc.xpath('/xmlns:manifest/xmlns:metadata')).validate!
 
     self
   end
