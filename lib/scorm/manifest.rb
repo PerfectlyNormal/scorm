@@ -4,12 +4,6 @@ require 'scorm/manifest/metadata'
 require 'scorm/resource'
 
 class Scorm::Manifest
-  class InvalidManifest         < RuntimeError; end
-  class NoMetadataError         < InvalidManifest; end
-  class DuplicateMetadataError  < InvalidManifest; end
-  class UnsupportedSCORMVersion < RuntimeError; end
-  class InvalidSCORMVersion     < RuntimeError; end
-
   include Virtus
   extend Forwardable
 
@@ -18,7 +12,7 @@ class Scorm::Manifest
 
   def self.parse(data)
     # Basic sanity check
-    raise InvalidManifest.new(
+    raise Scorm::Errors::InvalidManifest.new(
       "'#{data.inspect}' does not look like a valid SCORM manifest"
     ) if data.nil? || data.strip.length == 0
 

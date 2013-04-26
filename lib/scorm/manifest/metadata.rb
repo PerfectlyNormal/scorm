@@ -3,10 +3,10 @@ class Scorm::Manifest
     include Virtus
 
     def self.from_xml(document)
-      raise Scorm::Manifest::NoMetadataError.new(
+      raise Scorm::Errors::NoMetadataError.new(
         "<metadata> must appear once, but was not found"
       ) if document.length == 0
-      raise Scorm::Manifest::DuplicateMetadataError.new(
+      raise Scorm::Errors::DuplicateMetadataError.new(
        "<metadata> can only appear once, but was found #{document.length} times"
       ) if document.length > 1
 
@@ -15,7 +15,7 @@ class Scorm::Manifest
       schema        = document.xpath("xmlns:schema")
       schemaversion = document.xpath("xmlns:schemaversion")
       [schema, schemaversion].each do |tag|
-        raise Scorm::Manifest::InvalidManifest.new(
+        raise Scorm::Errors::InvalidManifest.new(
           "<#{tag.name}> must appear once, and only once, inside the <metadata> tag.
            Was found #{tag.length} times"
         ) if tag.length != 1
@@ -33,11 +33,11 @@ class Scorm::Manifest
     attribute :schemaversion, String
 
     def validate!
-      raise Scorm::Manifest::InvalidSCORMVersion.new(
+      raise Scorm::Errors::InvalidSCORMVersion.new(
         "#{to_s} is not a valid SCORM version"
       ) if !valid_schema? || !valid_schemaversion?
 
-      raise Scorm::Manifest::UnsupportedSCORMVersion.new(
+      raise Scorm::Errors::UnsupportedSCORMVersion.new(
         "#{to_s} is not a supported SCORM version"
       ) unless supported_schemaversion?
 

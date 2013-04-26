@@ -14,21 +14,21 @@ describe Scorm::Manifest::Metadata do
       doc = xml_scorm_manifest("no_metadata")
       expect {
         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      }.to raise_error(Scorm::Manifest::NoMetadataError)
+      }.to raise_error(Scorm::Errors::NoMetadataError)
     end
 
     it "should raise an exception if there are more than one metadata element" do
       doc = xml_scorm_manifest("duplicate_metadata")
       expect {
         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      }.to raise_error(Scorm::Manifest::DuplicateMetadataError)
+      }.to raise_error(Scorm::Errors::DuplicateMetadataError)
     end
 
     it "should not raise an exception when there is only one metadata element" do
       doc = xml_scorm_manifest("version_scorm_2004_4th")
       expect {
         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      }.to_not raise_error(Scorm::Manifest::InvalidManifest)
+      }.to_not raise_error(Scorm::Errors::InvalidManifest)
     end
   end
 
@@ -38,7 +38,7 @@ describe Scorm::Manifest::Metadata do
         doc = xml_scorm_manifest("invalid_scorm_version")
         expect {
           Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata")).validate!
-        }.to raise_error(Scorm::Manifest::InvalidSCORMVersion)
+        }.to raise_error(Scorm::Errors::InvalidSCORMVersion)
       end
     end
 
@@ -47,7 +47,7 @@ describe Scorm::Manifest::Metadata do
         doc = xml_scorm_manifest("version_scorm_1.2")
         expect {
          Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata")).validate!
-        }.to raise_error(Scorm::Manifest::UnsupportedSCORMVersion)
+        }.to raise_error(Scorm::Errors::UnsupportedSCORMVersion)
       end
     end
   end
