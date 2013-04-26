@@ -25,6 +25,16 @@ class Scorm::Manifest
       self
     end
 
+    def valid?
+      valid_schema? && valid_schemaversion?
+    end
+
+    def to_s
+      "<Manifest:Metadata '#{schema} #{schemaversion}'>"
+    end
+
+    private
+
     def valid_schema?
       schema == "ADL SCORM"
     end
@@ -35,10 +45,6 @@ class Scorm::Manifest
 
     def supported_schemaversion?
       Scorm::Manifest::SUPPORTED_SCORM_VERSIONS.include?(schemaversion)
-    end
-
-    def to_s
-      "<Manifest:Metadata '#{schema} #{schemaversion}'>"
     end
   end
 end
