@@ -27,7 +27,26 @@ describe Scorm::Organization::Item do
         Scorm::Organization::Item.from_xml(doc).title.should eq("Introduction")
       end
 
-      it "reads nested <item>s"
+      describe "nested <item>s" do
+        it "throws an error if the parent <item> has identifierref set" do
+          doc     = xml_scorm_manifest("organization_item_with_nested_and_identifierref")
+          itemsrc = doc.xpath("//xmlns:organization/xmlns:item")[0]
+
+          expect {
+            Scorm::Organization::Item.from_xml(itemsrc)
+          }.to raise_error(Scorm::Errors::InvalidManifest)
+        end
+
+        it "reads nested items" do
+          doc     = xml_scorm_manifest("organization_item_with_nested_items")
+          itemsrc = doc.xpath("//xmlns:organization/xmlns:item")[0]
+          item    = Scorm::Organization::Item.from_xml(itemsrc)
+
+          item.items.should_not be_empty
+          item.items.first.identifier.should eq("nested-item")
+        end
+      end
+
       it "reads <metadata>"
       it "reads <adlcp:timeLimitAction>"
       it "reads <adlcp:dataFromLMS>"

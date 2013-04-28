@@ -42,6 +42,15 @@ describe Scorm::Organization do
           Scorm::Organization.from_xml(too_many)
         }.to raise_error(Scorm::Errors::DuplicateItem)
       end
+
+      it "does not put an <item> nested in another <item> at the top level" do
+        doc    = xml_scorm_manifest("organization_item_with_nested_items")
+        orgsrc = doc.xpath("//xmlns:organization")[0]
+        org    = Scorm::Organization.from_xml(orgsrc)
+
+        org.items.should_not be_empty
+        org.items.collect(&:identifier).should_not include("nested-item")
+      end
     end
 
     it "raises an exception if the identifier cannot be found" do
