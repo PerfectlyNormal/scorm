@@ -3,7 +3,7 @@ require 'scorm/organization_set'
 
 describe Scorm::OrganizationSet do
   let(:xml_source) { xml_scorm_manifest("two_organizations") }
-  let(:doc)        { xml_source.xpath("/xmlns:manifest/xmlns:organizations")[0] }
+  let(:doc)        { xml_source.xpath("/xmlns:manifest/xmlns:organizations") }
 
   describe ".from_xml" do
     it "reads the default attribute" do
@@ -12,7 +12,7 @@ describe Scorm::OrganizationSet do
 
     it "throws an exception if the default attribute can't be found" do
       src = xml_scorm_manifest("organizations_without_default")
-      org = src.xpath("//xmlns:organizations")[0]
+      org = src.xpath("//xmlns:organizations")
       expect {
         Scorm::OrganizationSet.from_xml(org)
       }.to raise_error(Scorm::Errors::InvalidManifest)
