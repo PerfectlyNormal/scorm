@@ -1,5 +1,7 @@
 # Scorm
 
+[![Build Status](https://travis-ci.org/PerfectlyNormal/scorm.png?branch=master)](https://travis-ci.org/PerfectlyNormal/scorm) [![Code Climate](https://codeclimate.com/github/PerfectlyNormal/scorm.png)](https://codeclimate.com/github/PerfectlyNormal/scorm) [![Dependency Status](https://gemnasium.com/PerfectlyNormal/scorm.png)](https://gemnasium.com/PerfectlyNormal/scorm)
+
 SCORM is a gem implementing bits and pieces of the SCORM 2004 4th Edition
 specification. The eventual goal is to support it all, but that will take a
 while.
