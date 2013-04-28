@@ -89,7 +89,7 @@ describe Scorm::Organization do
 
   describe "#valid?" do
     it "should be valid with an identifier" do
-      org = Scorm::Organization.new(title: "Doesn't matter")
+      org = Scorm::Organization.new(title: Scorm::Title.new(title: "Doesn't matter"))
       org.should_not be_valid
 
       org.identifier = "my-first-organization"
@@ -100,7 +100,7 @@ describe Scorm::Organization do
       org = Scorm::Organization.new(identifier: "doesntmatter")
       org.should_not be_valid
 
-      org.title = "My first Organization"
+      org.title = Scorm::Title.new(title: "My first Organization")
       org.should be_valid
     end
   end

@@ -1,3 +1,5 @@
+require 'scorm/title'
+
 # 3.4.1.9. <item> Element
 # The <item> element is a node that describes the hierarchical structure of
 # the organization. The <item> element represents an activity in the content
@@ -97,6 +99,8 @@ class Scorm::Organization
       instance.identifierref = data.attr("identifierref") || ""
       instance.isvisible     = data.attr("isvisible")     || true
       instance.parameters    = data.attr("parameters")    || ""
+
+      instance.title         = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
       instance
     end
 
@@ -104,6 +108,7 @@ class Scorm::Organization
     attribute :identifierref, String,  default: ""
     attribute :isvisible,     Boolean, default: true
     attribute :parameters,    String,  default: ""
+    attribute :title,         Scorm::Title
 
     def to_s
       str  = ["<Item:#{identifier}"]

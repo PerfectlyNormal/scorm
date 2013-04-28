@@ -23,7 +23,10 @@ describe Scorm::Organization::Item do
     end
 
     describe "parsing child elements" do
-      it "reads <title>"
+      it "reads <title>" do
+        Scorm::Organization::Item.from_xml(doc).title.should eq("Introduction")
+      end
+
       it "reads nested <item>s"
       it "reads <metadata>"
       it "reads <adlcp:timeLimitAction>"
