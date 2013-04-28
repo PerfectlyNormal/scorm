@@ -5,4 +5,5 @@
     <schemaversion>2004 4th Edition</schemaversion>
   </metadata>
   <!-- need a lot more here, but this test only cares about the schemaversion -->
+  <organizations default="noworries"/>
 </manifest>

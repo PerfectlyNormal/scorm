@@ -44,10 +44,17 @@ describe Scorm::Manifest do
     manifest.resources[0].should be_a(Scorm::Resource)
   end
 
-  it "should parse each defined organization" do
-    manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
-    manifest.organizations.should_not be_empty
-    manifest.organizations.length.should eq(1)
-    manifest.organizations[0].should be_a(Scorm::Organization)
+  describe "the organization set" do
+    it "should be parsed" do
+      manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
+      manifest.organization_set.should_not be_nil
+    end
+
+    it "should delegate organization queries here" do
+      manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
+      manifest.organizations.should_not be_empty
+      manifest.organizations.length.should eq(1)
+      manifest.organizations[0].should be_a(Scorm::Organization)
+    end
   end
 end
