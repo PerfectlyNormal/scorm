@@ -6,6 +6,6 @@ module Scorm
     class NoOrganizationsError    < InvalidManifest; end
     class DuplicateOrganizationsError < InvalidManifest; end
     class UnsupportedSCORMVersion < RuntimeError; end
-    class InvalidSCORMVersion     < RuntimeError; end
+    class InvalidSCORMVersion     < InvalidManifest; end
   end
 end
