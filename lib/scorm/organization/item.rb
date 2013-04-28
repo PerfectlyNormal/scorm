@@ -101,15 +101,7 @@ class Scorm::Organization
       instance.parameters    = data.attr("parameters")    || ""
 
       instance.title         = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
-
-      # Read nested items
-      subitems = data.xpath("xmlns:item")
-      raise Scorm::Errors::InvalidManifest.new(
-        "Cannot have an <item> with identifierref set, and containing nested <item>s"
-      ) if subitems.length > 0 && instance.identifierref.to_s.strip != ""
-      subitems.each do |subitem|
-        instance.items.push(Scorm::Organization::Item.from_xml(subitem))
-      end
+      instance.parse_nested_items(data.xpath("xmlns:item"))
 
       instance
     end
@@ -120,6 +112,16 @@ class Scorm::Organization
     attribute :parameters,    String,  default: ""
     attribute :title,         Scorm::Title
     attribute :items,         Array[Scorm::Organization::Item]
+
+    def parse_nested_items(collection)
+      raise Scorm::Errors::InvalidManifest.new(
+        "Cannot have an <item> with identifierref set, and containing nested <item>s"
+      ) if collection.length > 0 && identifierref.to_s.strip != ""
+
+      collection.each do |subitem|
+        items.push(Scorm::Organization::Item.from_xml(subitem))
+      end
+    end
 
     def to_s
       str  = ["<Item:#{identifier}"]
