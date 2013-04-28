@@ -71,4 +71,8 @@ class Scorm::OrganizationSet
     default.to_s.strip != "" &&
       default_organization != nil
   end
+
+  def to_s
+    "<Organizations default='#{default}'>"
+  end
 end
