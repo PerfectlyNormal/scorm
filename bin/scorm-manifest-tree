@@ -15,16 +15,33 @@ def line(str, last = false, arm = "")
 end
 
 manifest = Scorm::Manifest.parse(File.read(file))
+has_organizations = !manifest.organizations.empty?
+has_resources     = !manifest.resources.empty?
 
 puts ". #{file}"
-line manifest.metadata, manifest.organizations.empty? && manifest.resources.empty?
+line manifest.metadata, !has_organizations && !has_resources
+
+# Print organizations
 unless manifest.organizations.empty?
-  line manifest.organization_set, manifest.resources.empty?
+  # Print organization set
+  line manifest.organization_set, !has_resources
+
   manifest.organizations.each_with_index do |org, org_index|
     last_organization = org_index == (manifest.organizations.length-1)
-    arm = manifest.resources.empty? ? "     " : "│    "
 
+    arm = has_resources ? "│   " : "    "
+
+    # Print organization
     line org, last_organization, arm
+
+    # Print organization items
+    org.items.each_with_index do |item, item_index|
+      last_item = item_index == (org.items.length-1)
+      item_arm  = has_resources     ? "│   " : "    "
+      item_arm += last_organization ? "    "  : "│   "
+
+      line item, last_item, item_arm
+    end
   end
 end
 

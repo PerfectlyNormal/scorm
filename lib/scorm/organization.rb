@@ -77,6 +77,9 @@ class Scorm::Organization
 
     # Children
     instance.title = Scorm::Title.from_xml(data.xpath("xmlns:title"), "organization")
+    data.xpath("xmlns:item").each do |item|
+      instance.items.push(Scorm::Organization::Item.from_xml(item))
+    end
 
     instance
   end
@@ -86,6 +89,7 @@ class Scorm::Organization
   attribute :adlseq_objectives_global_to_system, Boolean, default: true
   attribute :adlcp_shared_data_global_to_system, Boolean, default: true
   attribute :title, Scorm::Title
+  attribute :items, Array[Scorm::Organization::Item]
 
   def valid?
     identifier.to_s.strip != "" &&
