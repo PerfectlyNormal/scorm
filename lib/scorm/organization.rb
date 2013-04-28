@@ -86,6 +86,19 @@ class Scorm::Organization
     identifier.to_s.strip != ""
   end
 
+  def eql?(other)
+    return false if other.class != self.class
+    other.identifier == self.identifier
+  end
+
+  def ==(other)
+    eql?(other)
+  end
+
+  def hash
+    identifier.hash
+  end
+
   def to_s
     "<Organization:#{identifier} structure='#{structure}'>"
   end

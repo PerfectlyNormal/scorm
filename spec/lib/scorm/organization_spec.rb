@@ -45,6 +45,28 @@ describe Scorm::Organization do
     Scorm::Organization.new.adlcp_shared_data_global_to_system.should be_true
   end
 
+  describe "equality" do
+    it "should be equal if they have the same identifier" do
+      org1 = Scorm::Organization.new
+      org2 = Scorm::Organization.new
+
+      org1.identifier = "default_org"
+      org2.identifier = "default_org"
+
+      org1.should eq(org2)
+    end
+
+    it "should not be equal if they have different identifiers" do
+      org1 = Scorm::Organization.new
+      org2 = Scorm::Organization.new
+
+      org1.identifier = "default_org"
+      org2.identifier = "alternate_org"
+
+      org1.should_not eq(org2)
+    end
+  end
+
   describe "#valid?" do
     it "should be valid with an identifier" do
       org = Scorm::Organization.new
