@@ -91,5 +91,27 @@ class Scorm::Organization
   class Item
     include Virtus
 
+    def self.from_xml(data)
+      instance = new
+      instance.identifier    = data.attr("identifier")
+      instance.identifierref = data.attr("identifierref") || ""
+      instance.isvisible     = data.attr("isvisible")     || true
+      instance.parameters    = data.attr("parameters")    || ""
+      instance
+    end
+
+    attribute :identifier,    String
+    attribute :identifierref, String,  default: ""
+    attribute :isvisible,     Boolean, default: true
+    attribute :parameters,    String,  default: ""
+
+    def to_s
+      str  = ["<Item:#{identifier}"]
+      str.push(" identifierref='#{identifierref}'") if identifierref.to_s.strip != ""
+      str.push(" isvisible='false'")                if !isvisible
+      str.push(" parameters='#{parameters}'")       if parameters.to_s.strip != ""
+      str.push(">")
+      str.join
+    end
   end
 end
