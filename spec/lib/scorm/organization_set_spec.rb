@@ -50,18 +50,26 @@ describe Scorm::OrganizationSet do
   end
 
   describe "#valid?" do
-    it "is not valid if missing the 'default' attribute" do
-      set = Scorm::OrganizationSet.new
-      set.default = nil
-      set.should_not be_valid
+    describe "when the 'default' attribute is set" do
+      it "is valid when the 'default' organization exists" do
+        set = Scorm::OrganizationSet.new
+        set.organizations.push(Scorm::Organization.new(identifier: "default_org"))
+        set.default = "default_org"
+        set.should be_valid
+      end
+
+      it "is not valid when the default organization doesn't exist" do
+        set = Scorm::OrganizationSet.new(default: "default_org")
+        set.should_not be_valid
+      end
     end
 
-    it "is valid when the 'default' attribute is set" do
-      set = Scorm::OrganizationSet.new
-      set.default = "default_org"
-      set.should be_valid
+    describe "when the 'default' attribute is not set" do
+      it "is not valid" do
+        set = Scorm::OrganizationSet.new
+        set.default = nil
+        set.should_not be_valid
+      end
     end
-
-    it "requires the 'default' attribute to point to a child organization"
   end
 end

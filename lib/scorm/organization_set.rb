@@ -68,6 +68,7 @@ class Scorm::OrganizationSet
   end
 
   def valid?
-    default.to_s.strip != ""
+    default.to_s.strip != "" &&
+      default_organization != nil
   end
 end
