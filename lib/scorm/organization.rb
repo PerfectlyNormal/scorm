@@ -74,6 +74,16 @@ class Scorm::Organization
       "<organization> must have an identifier"
     ) unless instance.identifier.to_s.strip != ""
 
+    # Children
+    title = data.xpath("xmlns:title")
+    raise Scorm::Errors::RequiredItemMissing.new(
+      "An <organization> is required to have a <title>"
+    ) if title.length == 0
+    raise Scorm::Errors::DuplicateItem.new(
+      "An <organization> can only have one <title>"
+    ) if title.length > 1
+    instance.title = title.text
+
     instance
   end
 
@@ -81,9 +91,11 @@ class Scorm::Organization
   attribute :structure,  String, default: "hierarchical"
   attribute :adlseq_objectives_global_to_system, Boolean, default: true
   attribute :adlcp_shared_data_global_to_system, Boolean, default: true
+  attribute :title, String
 
   def valid?
-    identifier.to_s.strip != ""
+    identifier.to_s.strip != "" &&
+      title.to_s.strip != ""
   end
 
   def eql?(other)

@@ -24,6 +24,26 @@ describe Scorm::Organization do
       org.adlcp_shared_data_global_to_system.should be_false
     end
 
+    describe "child elements" do
+      it "reads <title>" do
+        org = Scorm::Organization.from_xml(doc)
+        org.title.should eq("Default Organization")
+      end
+
+      it "raises an error unless one, and only one, <title> element exists" do
+        missing  = xml_scorm_manifest("untitled_organization").xpath("//xmlns:organization")[0]
+        too_many = xml_scorm_manifest("wellnamed_organization").xpath("//xmlns:organization")[0]
+
+        expect {
+          Scorm::Organization.from_xml(missing)
+        }.to raise_error(Scorm::Errors::RequiredItemMissing)
+
+        expect {
+          Scorm::Organization.from_xml(too_many)
+        }.to raise_error(Scorm::Errors::DuplicateItem)
+      end
+    end
+
     it "raises an exception if the identifier cannot be found" do
       src = xml_scorm_manifest("organization_without_identifier")
       no_identifier = src.xpath("//xmlns:organization")[0]
@@ -69,10 +89,18 @@ describe Scorm::Organization do
 
   describe "#valid?" do
     it "should be valid with an identifier" do
-      org = Scorm::Organization.new
+      org = Scorm::Organization.new(title: "Doesn't matter")
       org.should_not be_valid
 
       org.identifier = "my-first-organization"
+      org.should be_valid
+    end
+
+    it "should require a title" do
+      org = Scorm::Organization.new(identifier: "doesntmatter")
+      org.should_not be_valid
+
+      org.title = "My first Organization"
       org.should be_valid
     end
   end
