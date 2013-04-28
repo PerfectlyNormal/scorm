@@ -50,6 +50,18 @@ describe Scorm::Manifest do
       manifest.organization_set.should_not be_nil
     end
 
+    it "should throw an exception if no organization set was found" do
+      expect {
+        Scorm::Manifest.parse(scorm_manifest("no_organizations"))
+      }.to raise_error(Scorm::Errors::NoOrganizationsError)
+    end
+
+    it "should throw an exception if more than one organization set was found" do
+      expect {
+        Scorm::Manifest.parse(scorm_manifest("too_many_organizations"))
+      }.to raise_error(Scorm::Errors::DuplicateOrganizationsError)
+    end
+
     it "should delegate organization queries here" do
       manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
       manifest.organizations.should_not be_empty
