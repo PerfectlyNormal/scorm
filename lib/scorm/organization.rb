@@ -1,4 +1,5 @@
 require 'scorm/errors'
+require 'scorm/organization/item'
 
 # 3.4.1.7. <organization> Element
 # The <organization> element describes a particular hierarchical organization.
