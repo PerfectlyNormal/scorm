@@ -27,6 +27,7 @@
           isvisible="false"
           parameters="test=true">
           <title>Introduction</title>
+          <adlcp:timeLimitAction>exit,no message</adlcp:timeLimitAction>
         </item>
         <item identifier="general" identifierref="general_resource">
           <title>General</title>

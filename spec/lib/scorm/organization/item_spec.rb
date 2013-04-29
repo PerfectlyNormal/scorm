@@ -48,7 +48,11 @@ describe Scorm::Organization::Item do
       end
 
       it "reads <metadata>"
-      it "reads <adlcp:timeLimitAction>"
+
+      it "reads <adlcp:timeLimitAction>" do
+        Scorm::Organization::Item.from_xml(doc).adlcp_time_limit_action.should eq("exit,no message")
+      end
+
       it "reads <adlcp:dataFromLMS>"
       it "reads <adlcp:completionThreshold>"
       it "reads <imsss:sequencing>"

@@ -1,4 +1,5 @@
 require 'scorm/errors'
+require 'scorm/adlcp'
 require 'scorm/organization/item'
 
 # 3.4.1.7. <organization> Element
