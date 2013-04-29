@@ -103,6 +103,8 @@ class Scorm::Organization
       instance.title = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
       instance.adlcp_time_limit_action =
         Scorm::Adlcp::TimeLimitAction.from_xml(data.xpath("adlcp:timeLimitAction"))
+      instance.adlcp_data_from_lms =
+        Scorm::Adlcp::DataFromLMS.from_xml(data.xpath("adlcp:dataFromLMS"))
       instance.parse_nested_items(data.xpath("xmlns:item"))
 
       instance
@@ -115,6 +117,7 @@ class Scorm::Organization
     attribute :title,         Scorm::Title
     attribute :items,         Array[Scorm::Organization::Item]
     attribute :adlcp_time_limit_action, Scorm::Adlcp::TimeLimitAction
+    attribute :adlcp_data_from_lms, Scorm::Adlcp::DataFromLMS
 
     def parse_nested_items(collection)
       raise Scorm::Errors::InvalidManifest.new(

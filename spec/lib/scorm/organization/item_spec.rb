@@ -53,7 +53,11 @@ describe Scorm::Organization::Item do
         Scorm::Organization::Item.from_xml(doc).adlcp_time_limit_action.should eq("exit,no message")
       end
 
-      it "reads <adlcp:dataFromLMS>"
+      it "reads <adlcp:dataFromLMS>" do
+        item = Scorm::Organization::Item.from_xml(doc)
+        item.adlcp_data_from_lms.should eq("this will be passed along from the LMS")
+      end
+
       it "reads <adlcp:completionThreshold>"
       it "reads <imsss:sequencing>"
       it "reads <adlnav:presentation>"
