@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Scorm::VERSION
   spec.authors       = ["Per Christian B. Viken"]
   spec.email         = ["perchr@northblue.org"]
-  spec.description   = %q{The important bits of the SCORM 2004 4th Edition Standard}
+  spec.description   = %q{The important bits of the SCORM 2004 4th Edition Standard. If time permits, this gem should support the other versions of the standard as well.}
   spec.summary       = %q{The important bits of the SCORM 2004 4th Edition Standard}
   spec.homepage      = "https://eastblue.org/blag/"
   spec.license       = "MIT"

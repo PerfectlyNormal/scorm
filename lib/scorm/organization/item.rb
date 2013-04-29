@@ -100,10 +100,9 @@ class Scorm::Organization
       instance.isvisible     = data.attr("isvisible")     || true
       instance.parameters    = data.attr("parameters")    || ""
 
-      instance.title         = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
-      instance.adlcp_time_limit_action = Scorm::Adlcp::TimeLimitAction.from_xml(
-        data.xpath("adlcp:timeLimitAction")
-      )
+      instance.title = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
+      instance.adlcp_time_limit_action =
+        Scorm::Adlcp::TimeLimitAction.from_xml(data.xpath("adlcp:timeLimitAction"))
       instance.parse_nested_items(data.xpath("xmlns:item"))
 
       instance
