@@ -29,6 +29,9 @@
           <title>Introduction</title>
           <adlcp:timeLimitAction>exit,no message</adlcp:timeLimitAction>
           <adlcp:dataFromLMS>this will be passed along from the LMS</adlcp:dataFromLMS>
+          <adlcp:data>
+            <adlcp:map targetID="somewhere" readSharedData="false" writeSharedData="false" />
+          </adlcp:data>
         </item>
         <item identifier="general" identifierref="general_resource">
           <title>General</title>

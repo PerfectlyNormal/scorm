@@ -61,7 +61,13 @@ describe Scorm::Organization::Item do
       it "reads <adlcp:completionThreshold>"
       it "reads <imsss:sequencing>"
       it "reads <adlnav:presentation>"
-      it "reads <adlcp:data>"
+
+      it "reads <adlcp:data>" do
+        item = Scorm::Organization::Item.from_xml(doc)
+        item.adlcp_data.should_not be_nil
+        item.adlcp_data.should be_a(Scorm::Adlcp::Data)
+        item.adlcp_data.should be_valid
+      end
     end
   end
 end
