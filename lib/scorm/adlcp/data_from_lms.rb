@@ -1,4 +1,5 @@
 require 'virtus'
+require 'forwardable'
 require 'scorm/errors'
 
 # 3.4.1.14. <dataFromLMS> Element
