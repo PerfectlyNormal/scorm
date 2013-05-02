@@ -58,6 +58,18 @@ describe Scorm::Organization::Item do
         item.adlcp_data_from_lms.should eq("this will be passed along from the LMS")
       end
 
+      it "throws an error if there is more than one <adlcp:dataFromLMS> element" do
+        itemsrc = xml_organization_item(<<-XML)
+          <title>My First Item</title>
+          <adlcp:dataFromLMS>here's some data</adlcp:dataFromLMS>
+          <adlcp:dataFromLMS>and some more, but this is not allowed!</adlcp:dataFromLMS>
+        XML
+
+        expect {
+          Scorm::Organization::Item.from_xml(itemsrc)
+        }.to raise_error(Scorm::Errors::DuplicateItem)
+      end
+
       it "reads <adlcp:completionThreshold>"
       it "reads <imsss:sequencing>"
       it "reads <adlnav:presentation>"
