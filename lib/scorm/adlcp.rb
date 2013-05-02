@@ -1,4 +1,5 @@
-require 'scorm/adlcp/time_limit_action'
-require 'scorm/adlcp/data_from_lms'
+require 'scorm/adlcp/completion_threshold'
 require 'scorm/adlcp/data'
+require 'scorm/adlcp/data_from_lms'
 require 'scorm/adlcp/map'
+require 'scorm/adlcp/time_limit_action'

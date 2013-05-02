@@ -27,6 +27,7 @@
           isvisible="false"
           parameters="test=true">
           <title>Introduction</title>
+          <adlcp:completionThreshold completedByMeasure="true"/>
           <adlcp:timeLimitAction>exit,no message</adlcp:timeLimitAction>
           <adlcp:dataFromLMS>this will be passed along from the LMS</adlcp:dataFromLMS>
           <adlcp:data>

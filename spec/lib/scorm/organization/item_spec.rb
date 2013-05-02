@@ -70,7 +70,25 @@ describe Scorm::Organization::Item do
         }.to raise_error(Scorm::Errors::DuplicateItem)
       end
 
-      it "reads <adlcp:completionThreshold>"
+      it "reads <adlcp:completionThreshold>" do
+        item = Scorm::Organization::Item.from_xml(doc)
+        item.adlcp_completion_threshold.should_not be_nil
+        item.adlcp_completion_threshold.should be_a(Scorm::Adlcp::CompletionThreshold)
+        item.adlcp_completion_threshold.should be_valid
+      end
+
+      it "throws an error if there is more than one <adlcp:completionThreshold> element" do
+        itemsrc = xml_organization_item(<<-XML)
+          <title>My First Item</title>
+          <adlcp:completionThreshold progressWeight="0.5"/>
+          <adlcp:completionThreshold/>
+        XML
+
+        expect {
+          Scorm::Organization::Item.from_xml(itemsrc)
+        }.to raise_error(Scorm::Errors::DuplicateItem)
+      end
+
       it "reads <imsss:sequencing>"
       it "reads <adlnav:presentation>"
 
