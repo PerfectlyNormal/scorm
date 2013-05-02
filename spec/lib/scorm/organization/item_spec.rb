@@ -68,6 +68,18 @@ describe Scorm::Organization::Item do
         item.adlcp_data.should be_a(Scorm::Adlcp::Data)
         item.adlcp_data.should be_valid
       end
+
+      it "throws an error if there is more than one <adlcp:data> element" do
+        itemsrc = xml_organization_item(<<-XML)
+          <title>My First Item</title>
+          <adlcp:data><adlcp:map targetID="somewhere"/></adlcp:data>
+          <adlcp:data><adlcp:map targetID="nowhere"/></adlcp:data>
+        XML
+
+        expect {
+          Scorm::Organization::Item.from_xml(itemsrc)
+        }.to raise_error(Scorm::Errors::DuplicateItem)
+      end
     end
   end
 end

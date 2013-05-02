@@ -36,16 +36,18 @@ module Scorm::Adlcp
     include Virtus
 
     def self.from_xml(data)
-      return nil if data.nil? || (data.is_a?(Nokogiri::XML::NodeSet) && data.empty?)
-      instance = new
+      return nil if data.nil? || data.length == 0
+      raise Scorm::Errors::DuplicateItem.new(
+        "Found #{data.length} instances of <adlcp:data>, but only 0 or 1 is allowed."
+      ) if data.length > 1
+      raise Scorm::Errors::RequiredItemMissing.new(
+        "<adlcp:data> requires one or more <adlcp:map> elements, but found none"
+      ) if data.xpath("adlcp:map").empty?
 
+      instance = new
       data.xpath("adlcp:map").each do |map|
         instance.maps.push(Scorm::Adlcp::Map.from_xml(map))
       end
-
-      raise Scorm::Errors::RequiredItemMissing.new(
-        "<adlcp:data> requires one or more <adlcp:map> elements, but found none"
-      ) if instance.maps.empty?
 
       instance
     end

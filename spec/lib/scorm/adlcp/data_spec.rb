@@ -11,7 +11,7 @@ describe Scorm::Adlcp::Data do
     end
 
     it "should parse <adlcp:map> elements" do
-      doc = xml_organization_item(<<-XML).xpath("//adlcp:data")[0]
+      doc = xml_organization_item(<<-XML).xpath("//adlcp:data")
         <adlcp:data>
           <adlcp:map targetID="somewhere"/>
           <adlcp:map targetID="somewhere-else"/>
@@ -25,7 +25,7 @@ describe Scorm::Adlcp::Data do
     end
 
     it "should throw an exception if no <adlcp:map> elements are found" do
-      doc = xml_organization_item(<<-XML).xpath("//adlcp:data")[0]
+      doc = xml_organization_item(<<-XML).xpath("//adlcp:data")
         <adlcp:data></adlcp:data>
       XML
 
