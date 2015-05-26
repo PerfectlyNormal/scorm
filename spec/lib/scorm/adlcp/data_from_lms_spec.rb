@@ -21,7 +21,7 @@ describe Scorm::Adlcp::DataFromLMS do
     it "should read the contents" do
       item = xml_organization_item(
         "<adlcp:dataFromLMS>some data here</adlcp:dataFromLMS>")
-      Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS")).should eq("some data here")
+      Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS")).data.should eq("some data here")
     end
   end
 end

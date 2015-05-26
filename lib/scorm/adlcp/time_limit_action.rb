@@ -76,7 +76,11 @@ module Scorm::Adlcp
     end
 
     attribute :action, String, default: ""
-    def_delegators :action, :to_s, :eql, :==, :hash
+    def_delegators :action, :eql, :==, :hash
+
+    def to_s
+      "<adlcp:timeLimitAction>#{action}</adlcp:timeLimitAction>"
+    end
 
     def valid?
       VALID_ACTIONS.include?(action)

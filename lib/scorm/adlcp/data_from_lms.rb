@@ -50,7 +50,11 @@ module Scorm::Adlcp
       new(data: data.text)
     end
 
+    def to_s
+      "<adlcp:dataFromLMS>#{data.length} bytes</adlcp:dataFromLMS>"
+    end
+
     attribute :data, String, default: ""
-    def_delegators :data, :to_s, :hash, :eql, :==
+    def_delegators :data, :hash, :eql, :==
   end
 end
