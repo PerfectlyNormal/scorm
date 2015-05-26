@@ -95,28 +95,28 @@ class Scorm::Organization
 
     def self.from_xml(data)
       instance = new
-      instance.identifier    = data.attr("identifier")
-      instance.identifierref = data.attr("identifierref") || ""
-      instance.isvisible     = data.attr("isvisible")     || true
-      instance.parameters    = data.attr("parameters")    || ""
+      instance.identifier    = data.attr('identifier')
+      instance.identifierref = data.attr('identifierref') || ''
+      instance.isvisible     = data.attr('isvisible')     || true
+      instance.parameters    = data.attr('parameters')    || ''
 
-      instance.title = Scorm::Title.from_xml(data.xpath("xmlns:title"), "item")
+      instance.title = Scorm::Title.from_xml(data.xpath('xmlns:title'), 'item')
       instance.adlcp_time_limit_action =
-        Scorm::Adlcp::TimeLimitAction.from_xml(data.xpath("adlcp:timeLimitAction"))
+        Scorm::Adlcp::TimeLimitAction.from_xml(data.xpath('adlcp:timeLimitAction'))
       instance.adlcp_data_from_lms =
-        Scorm::Adlcp::DataFromLMS.from_xml(data.xpath("adlcp:dataFromLMS"))
-      instance.adlcp_data = Scorm::Adlcp::Data.from_xml(data.xpath("adlcp:data"))
+        Scorm::Adlcp::DataFromLMS.from_xml(data.xpath('adlcp:dataFromLMS'))
+      instance.adlcp_data = Scorm::Adlcp::Data.from_xml(data.xpath('adlcp:data'))
       instance.adlcp_completion_threshold =
-        Scorm::Adlcp::CompletionThreshold.from_xml(data.xpath("adlcp:completionThreshold"))
-      instance.parse_nested_items(data.xpath("xmlns:item"))
+        Scorm::Adlcp::CompletionThreshold.from_xml(data.xpath('adlcp:completionThreshold'))
+      instance.parse_nested_items(data.xpath('xmlns:item'))
 
       instance
     end
 
     attribute :identifier,    String
-    attribute :identifierref, String,  default: ""
+    attribute :identifierref, String,  default: ''
     attribute :isvisible,     Boolean, default: true
-    attribute :parameters,    String,  default: ""
+    attribute :parameters,    String,  default: ''
     attribute :title,         Scorm::Title
     attribute :items,         Array[Scorm::Organization::Item]
     attribute :adlcp_time_limit_action, Scorm::Adlcp::TimeLimitAction
@@ -126,8 +126,8 @@ class Scorm::Organization
 
     def parse_nested_items(collection)
       raise Scorm::Errors::InvalidManifest.new(
-        "Cannot have an <item> with identifierref set, and containing nested <item>s"
-      ) if collection.length > 0 && identifierref.to_s.strip != ""
+        'Cannot have an <item> with identifierref set, and containing nested <item>s'
+      ) if collection.length > 0 && identifierref.to_s.strip != ''
 
       collection.each do |subitem|
         items.push(Scorm::Organization::Item.from_xml(subitem))
@@ -136,10 +136,10 @@ class Scorm::Organization
 
     def to_s
       str  = ["<Item:#{identifier}"]
-      str.push(" identifierref='#{identifierref}'") if identifierref.to_s.strip != ""
+      str.push(" identifierref='#{identifierref}'") if identifierref.to_s.strip != ''
       str.push(" isvisible='false'")                if !isvisible
-      str.push(" parameters='#{parameters}'")       if parameters.to_s.strip != ""
-      str.push(">")
+      str.push(" parameters='#{parameters}'")       if parameters.to_s.strip != ''
+      str.push('>')
       str.join
     end
   end

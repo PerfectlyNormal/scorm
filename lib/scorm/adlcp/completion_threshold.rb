@@ -73,9 +73,9 @@ module Scorm::Adlcp
       data = data[0]
 
       instance = new
-      instance.completed_by_measure = data.attr("completedByMeasure") || false
-      instance.min_progress_measure = data.attr("minProgressMeasure") || 1.0
-      instance.progress_weight      = data.attr("progressWeight")     || 1.0
+      instance.completed_by_measure = data.attr('completedByMeasure') || false
+      instance.min_progress_measure = data.attr('minProgressMeasure') || 1.0
+      instance.progress_weight      = data.attr('progressWeight')     || 1.0
       instance
     end
 

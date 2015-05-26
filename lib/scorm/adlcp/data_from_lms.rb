@@ -54,7 +54,7 @@ module Scorm::Adlcp
       "<adlcp:dataFromLMS>#{data.length} bytes</adlcp:dataFromLMS>"
     end
 
-    attribute :data, String, default: ""
+    attribute :data, String, default: ''
     def_delegators :data, :hash, :eql, :==
   end
 end

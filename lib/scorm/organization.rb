@@ -68,17 +68,17 @@ class Scorm::Organization
 
   def self.from_xml(data)
     instance = new
-    instance.identifier = data.attr("identifier")
-    instance.structure  = data.attr("structure") || "hierarchical"
-    instance.adlseq_objectives_global_to_system = data.attr("adlseq:objectivesGlobalToSystem") || true
-    instance.adlcp_shared_data_global_to_system = data.attr("adlcp:sharedDataGlobalToSystem")  || true
+    instance.identifier = data.attr('identifier')
+    instance.structure  = data.attr('structure') || 'hierarchical'
+    instance.adlseq_objectives_global_to_system = data.attr('adlseq:objectivesGlobalToSystem') || true
+    instance.adlcp_shared_data_global_to_system = data.attr('adlcp:sharedDataGlobalToSystem')  || true
     raise Scorm::Errors::InvalidManifest.new(
-      "<organization> must have an identifier"
-    ) unless instance.identifier.to_s.strip != ""
+      '<organization> must have an identifier'
+    ) unless instance.identifier.to_s.strip != ''
 
     # Children
-    instance.title = Scorm::Title.from_xml(data.xpath("xmlns:title"), "organization")
-    data.xpath("xmlns:item").each do |item|
+    instance.title = Scorm::Title.from_xml(data.xpath('xmlns:title'), 'organization')
+    data.xpath('xmlns:item').each do |item|
       instance.items.push(Scorm::Organization::Item.from_xml(item))
     end
 
@@ -86,15 +86,15 @@ class Scorm::Organization
   end
 
   attribute :identifier, String
-  attribute :structure,  String, default: "hierarchical"
+  attribute :structure,  String, default: 'hierarchical'
   attribute :adlseq_objectives_global_to_system, Boolean, default: true
   attribute :adlcp_shared_data_global_to_system, Boolean, default: true
   attribute :title, Scorm::Title
   attribute :items, Array[Scorm::Organization::Item]
 
   def valid?
-    identifier.to_s.strip != "" &&
-      title.to_s.strip != ""
+    identifier.to_s.strip != '' &&
+      title.to_s.strip != ''
   end
 
   def eql?(other)

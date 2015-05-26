@@ -57,8 +57,8 @@ module Scorm::Adlcp
   class TimeLimitAction
     include Virtus.model
     extend Forwardable
-    VALID_ACTIONS = ["exit,message", "exit,no message",
-                     "continue,message", "continue,no message"]
+    VALID_ACTIONS = ['exit,message', 'exit,no message',
+                     'continue,message', 'continue,no message']
 
     def self.from_xml(data)
       return nil if data.length == 0

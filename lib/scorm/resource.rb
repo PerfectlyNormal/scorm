@@ -93,15 +93,15 @@ class Scorm::Resource
 
   def self.from_xml(data)
     instance = new
-    instance.identifier       = data.attr("identifier")
-    instance.type             = data.attr("type")
-    instance.href             = data.attr("href")
-    instance.xml_base         = data.attr("xml:base")
-    instance.adlcp_scorm_type = data.attr("adlcp:scormType")
-    data.xpath("xmlns:dependency").each do |dependency|
+    instance.identifier       = data.attr('identifier')
+    instance.type             = data.attr('type')
+    instance.href             = data.attr('href')
+    instance.xml_base         = data.attr('xml:base')
+    instance.adlcp_scorm_type = data.attr('adlcp:scormType')
+    data.xpath('xmlns:dependency').each do |dependency|
       instance.dependencies.push Scorm::Resource::Dependency.from_xml(dependency)
     end
-    data.xpath("xmlns:file").each do |file|
+    data.xpath('xmlns:file').each do |file|
       instance.files.push Scorm::Resource::File.from_xml(file)
     end
 
@@ -109,10 +109,10 @@ class Scorm::Resource
   end
 
   attribute :identifier, String
-  attribute :type, String, default: "webcontent"
-  attribute :href, String, default: ""
+  attribute :type, String, default: 'webcontent'
+  attribute :href, String, default: ''
   attribute :xml_base, String # FIXME: Would like to just use a URI here
-  attribute :adlcp_scorm_type, String, default: "sco"
+  attribute :adlcp_scorm_type, String, default: 'sco'
   attribute :dependencies, Array[Scorm::Resource::Dependency]
   attribute :files, Array[Scorm::Resource::File]
 
@@ -121,9 +121,9 @@ class Scorm::Resource
   end
 
   def valid?
-    identifier.to_s != "" &&
-      type.to_s != "" &&
-      adlcp_scorm_type != "" &&
+    identifier.to_s != '' &&
+      type.to_s != '' &&
+      adlcp_scorm_type != '' &&
       VALID_SCORM_TYPES.include?(adlcp_scorm_type)
   end
 end

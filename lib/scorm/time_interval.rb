@@ -50,7 +50,7 @@ module Scorm
 
     def self.from_seconds(seconds)
       raise InvalidFormat.new("Not a number: #{seconds}")   if !seconds.respond_to?(:to_f)
-      raise InvalidFormat.new("Seconds cannot be negative") if seconds.to_f < 0
+      raise InvalidFormat.new('Seconds cannot be negative') if seconds.to_f < 0
 
       interval  = new
       remaining = seconds.to_f
@@ -91,14 +91,14 @@ module Scorm
     # as the standard requires.
     def seconds
       return @seconds.to_i if @seconds.to_i == @seconds
-      sprintf("%0.2f", @seconds).to_f
+      sprintf('%0.2f', @seconds).to_f
     end
 
     # Return the interval marked up as described in {TimeInterval}
     # @return String
     def to_s
-      return "PT0S" if no_date? && no_time?
-      parts = ["P"]
+      return 'PT0S' if no_date? && no_time?
+      parts = ['P']
 
       parts << "#{years.to_i}Y"  if years  > 0
       parts << "#{months.to_i}M" if months > 0

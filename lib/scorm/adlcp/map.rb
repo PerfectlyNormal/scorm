@@ -47,11 +47,11 @@ module Scorm::Adlcp
 
       raise Scorm::Errors::InvalidManifest.new(
         "<adlcp:map> requires a targetID attribute, but none found"
-      ) unless data.attr("targetID")
+      ) unless data.attr('targetID')
 
-      instance.target_id         = data.attr("targetID")
-      instance.read_shared_data  = data.attr("readSharedData")
-      instance.write_shared_data = data.attr("writeSharedData")
+      instance.target_id         = data.attr('targetID')
+      instance.read_shared_data  = data.attr('readSharedData')
+      instance.write_shared_data = data.attr('writeSharedData')
 
       instance
     end
@@ -61,7 +61,7 @@ module Scorm::Adlcp
     attribute :write_shared_data, Boolean, default: true
 
     def valid?
-      target_id.to_s.strip != ""
+      target_id.to_s.strip != ''
     end
   end
 end

@@ -28,10 +28,10 @@ class Scorm::Title
 
   def self.from_xml(title, parent)
     raise Scorm::Errors::RequiredItemMissing.new(
-      "An <#{parent}> is required to have a <title>"
+      "A <#{parent}> is required to have a <title>"
     ) if title.length == 0
     raise Scorm::Errors::DuplicateItem.new(
-      "An <#{parent}> can only have one <title>"
+      "A <#{parent}> can only have one <title>"
     ) if title.length > 1
 
     new(title: title.text)

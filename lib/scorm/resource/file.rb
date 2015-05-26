@@ -57,7 +57,7 @@ class Scorm::Resource
 
     def self.from_xml(data)
       instance = new
-      instance.href = data.attr("href")
+      instance.href = data.attr('href')
       # FIXME: Parse <metadata> here
 
       instance
@@ -70,7 +70,7 @@ class Scorm::Resource
     end
 
     def valid?
-      href.to_s != ""
+      href.to_s != ''
     end
   end
 end

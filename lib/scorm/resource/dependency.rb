@@ -36,7 +36,7 @@ class Scorm::Resource
 
     def self.from_xml(data)
       instance = new
-      instance.identifierref = data.attr("identifierref")
+      instance.identifierref = data.attr('identifierref')
 
       instance
     end

@@ -42,10 +42,10 @@ module Scorm::Adlcp
       ) if data.length > 1
       raise Scorm::Errors::RequiredItemMissing.new(
         "<adlcp:data> requires one or more <adlcp:map> elements, but found none"
-      ) if data.xpath("adlcp:map").empty?
+      ) if data.xpath('adlcp:map').empty?
 
       instance = new
-      data.xpath("adlcp:map").each do |map|
+      data.xpath('adlcp:map').each do |map|
         instance.maps.push(Scorm::Adlcp::Map.from_xml(map))
       end
 

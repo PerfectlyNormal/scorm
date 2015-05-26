@@ -41,7 +41,7 @@ class Scorm::OrganizationSet
 
   def self.from_xml(data)
     raise Scorm::Errors::NoOrganizationsError.new(
-      "<organizations> must appear once, but was not found"
+      '<organizations> must appear once, but was not found'
     ) if data.length == 0
     raise Scorm::Errors::DuplicateOrganizationsError.new(
      "<organizations> can only appear once, but was found #{data.length} times"
@@ -49,7 +49,7 @@ class Scorm::OrganizationSet
 
     instance = new
     instance.default = data.attr('default')
-    data.xpath("xmlns:organization").each do |org|
+    data.xpath('xmlns:organization').each do |org|
       instance.organizations.push(Scorm::Organization.from_xml(org))
     end
 
@@ -68,7 +68,7 @@ class Scorm::OrganizationSet
   end
 
   def valid?
-    default.to_s.strip != "" &&
+    default.to_s.strip != '' &&
       default_organization != nil
   end
 

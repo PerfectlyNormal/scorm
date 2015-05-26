@@ -4,7 +4,7 @@ class Scorm::Manifest
 
     def self.from_xml(document)
       raise Scorm::Errors::NoMetadataError.new(
-        "<metadata> must appear once, but was not found"
+        '<metadata> must appear once, but was not found'
       ) if document.length == 0
       raise Scorm::Errors::DuplicateMetadataError.new(
        "<metadata> can only appear once, but was found #{document.length} times"
@@ -12,8 +12,8 @@ class Scorm::Manifest
 
       # <schema> and <schemaversion> must appear once, and only once.
       # Verify this.
-      schema        = document.xpath("xmlns:schema")
-      schemaversion = document.xpath("xmlns:schemaversion")
+      schema        = document.xpath('xmlns:schema')
+      schemaversion = document.xpath('xmlns:schemaversion')
       [schema, schemaversion].each do |tag|
         raise Scorm::Errors::InvalidManifest.new(
           "<#{tag.name}> must appear once, and only once, inside the <metadata> tag.
@@ -55,7 +55,7 @@ class Scorm::Manifest
     private
 
     def valid_schema?
-      schema == "ADL SCORM"
+      schema == 'ADL SCORM'
     end
 
     def valid_schemaversion?
