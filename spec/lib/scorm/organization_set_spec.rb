@@ -7,7 +7,7 @@ describe Scorm::OrganizationSet do
 
   describe ".from_xml" do
     it "reads the default attribute" do
-      Scorm::OrganizationSet.from_xml(doc).default.should eq("default_org")
+      expect(Scorm::OrganizationSet.from_xml(doc).default).to eq("default_org")
     end
 
     it "throws an exception if the default attribute can't be found" do
@@ -20,10 +20,10 @@ describe Scorm::OrganizationSet do
 
     it "parses the child organizations" do
       set = Scorm::OrganizationSet.from_xml(doc)
-      set.organizations.should_not be_empty
-      set.organizations[0].should be_a(Scorm::Organization)
-      set.organizations[1].should be_a(Scorm::Organization)
-      set.organizations[0].should_not eq(set.organizations[1])
+      expect(set.organizations).not_to be_empty
+      expect(set.organizations[0]).to be_a(Scorm::Organization)
+      expect(set.organizations[1]).to be_a(Scorm::Organization)
+      expect(set.organizations[0]).not_to eq(set.organizations[1])
     end
   end
 
@@ -37,7 +37,7 @@ describe Scorm::OrganizationSet do
       set.organizations.push(org2)
       set.default = org2.identifier
 
-      set.default_organization.should eq(org2)
+      expect(set.default_organization).to eq(org2)
     end
 
     it "returns nil if it can't find the organization" do
@@ -45,7 +45,7 @@ describe Scorm::OrganizationSet do
       set.organizations.push(org2)
       set.default = "third_org"
 
-      set.default_organization.should be_nil
+      expect(set.default_organization).to be_nil
     end
   end
 
@@ -55,12 +55,12 @@ describe Scorm::OrganizationSet do
         set = Scorm::OrganizationSet.new
         set.organizations.push(Scorm::Organization.new(identifier: "default_org"))
         set.default = "default_org"
-        set.should be_valid
+        expect(set).to be_valid
       end
 
       it "is not valid when the default organization doesn't exist" do
         set = Scorm::OrganizationSet.new(default: "default_org")
-        set.should_not be_valid
+        expect(set).not_to be_valid
       end
     end
 
@@ -68,7 +68,7 @@ describe Scorm::OrganizationSet do
       it "is not valid" do
         set = Scorm::OrganizationSet.new
         set.default = nil
-        set.should_not be_valid
+        expect(set).not_to be_valid
       end
     end
   end

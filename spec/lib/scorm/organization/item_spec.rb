@@ -7,24 +7,24 @@ describe Scorm::Organization::Item do
     let(:doc)    { source.xpath("//xmlns:organization/xmlns:item")[0] }
 
     it "reads the identifier" do
-      Scorm::Organization::Item.from_xml(doc).identifier.should eq("intro")
+      expect(Scorm::Organization::Item.from_xml(doc).identifier).to eq("intro")
     end
 
     it "reads the 'identifierref' attribute" do
-      Scorm::Organization::Item.from_xml(doc).identifierref.should eq("intro_resource")
+      expect(Scorm::Organization::Item.from_xml(doc).identifierref).to eq("intro_resource")
     end
 
     it "reads the 'isvisible' attribute" do
-      Scorm::Organization::Item.from_xml(doc).isvisible.should be_false
+      expect(Scorm::Organization::Item.from_xml(doc).isvisible).to be_falsey
     end
 
     it "reads the 'parameters' attribute" do
-      Scorm::Organization::Item.from_xml(doc).parameters.should eq("test=true")
+      expect(Scorm::Organization::Item.from_xml(doc).parameters).to eq("test=true")
     end
 
     describe "parsing child elements" do
       it "reads <title>" do
-        Scorm::Organization::Item.from_xml(doc).title.should eq("Introduction")
+        expect(Scorm::Organization::Item.from_xml(doc).title).to eq("Introduction")
       end
 
       describe "nested <item>s" do
@@ -42,20 +42,20 @@ describe Scorm::Organization::Item do
           itemsrc = doc.xpath("//xmlns:organization/xmlns:item")[0]
           item    = Scorm::Organization::Item.from_xml(itemsrc)
 
-          item.items.should_not be_empty
-          item.items.first.identifier.should eq("nested-item")
+          expect(item.items).not_to be_empty
+          expect(item.items.first.identifier).to eq("nested-item")
         end
       end
 
       it "reads <metadata>"
 
       it "reads <adlcp:timeLimitAction>" do
-        Scorm::Organization::Item.from_xml(doc).adlcp_time_limit_action.should eq("exit,no message")
+        expect(Scorm::Organization::Item.from_xml(doc).adlcp_time_limit_action).to eq("exit,no message")
       end
 
       it "reads <adlcp:dataFromLMS>" do
         item = Scorm::Organization::Item.from_xml(doc)
-        item.adlcp_data_from_lms.should eq("this will be passed along from the LMS")
+        expect(item.adlcp_data_from_lms).to eq("this will be passed along from the LMS")
       end
 
       it "throws an error if there is more than one <adlcp:dataFromLMS> element" do
@@ -72,9 +72,9 @@ describe Scorm::Organization::Item do
 
       it "reads <adlcp:completionThreshold>" do
         item = Scorm::Organization::Item.from_xml(doc)
-        item.adlcp_completion_threshold.should_not be_nil
-        item.adlcp_completion_threshold.should be_a(Scorm::Adlcp::CompletionThreshold)
-        item.adlcp_completion_threshold.should be_valid
+        expect(item.adlcp_completion_threshold).not_to be_nil
+        expect(item.adlcp_completion_threshold).to be_a(Scorm::Adlcp::CompletionThreshold)
+        expect(item.adlcp_completion_threshold).to be_valid
       end
 
       it "throws an error if there is more than one <adlcp:completionThreshold> element" do
@@ -94,9 +94,9 @@ describe Scorm::Organization::Item do
 
       it "reads <adlcp:data>" do
         item = Scorm::Organization::Item.from_xml(doc)
-        item.adlcp_data.should_not be_nil
-        item.adlcp_data.should be_a(Scorm::Adlcp::Data)
-        item.adlcp_data.should be_valid
+        expect(item.adlcp_data).not_to be_nil
+        expect(item.adlcp_data).to be_a(Scorm::Adlcp::Data)
+        expect(item.adlcp_data).to be_valid
       end
 
       it "throws an error if there is more than one <adlcp:data> element" do

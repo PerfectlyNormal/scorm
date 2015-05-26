@@ -7,7 +7,7 @@ describe Scorm::Title do
 
   it "reads <title>" do
     org = Scorm::Title.from_xml(doc, "organization")
-    org.title.should eq("Default Organization")
+    expect(org.title).to eq("Default Organization")
   end
 
   it "raises an error unless one, and only one, <title> element exists" do

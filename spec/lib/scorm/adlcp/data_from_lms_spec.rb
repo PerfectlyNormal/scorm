@@ -5,7 +5,7 @@ describe Scorm::Adlcp::DataFromLMS do
   describe ".from_xml" do
     it "should return nil if the element doesn't exist" do
       item = xml_organization_item("")
-      Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS")).should be_nil
+      expect(Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS"))).to be_nil
     end
 
     it "should raise an error if more than one element exists" do
@@ -21,7 +21,7 @@ describe Scorm::Adlcp::DataFromLMS do
     it "should read the contents" do
       item = xml_organization_item(
         "<adlcp:dataFromLMS>some data here</adlcp:dataFromLMS>")
-      Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS")).data.should eq("some data here")
+      expect(Scorm::Adlcp::DataFromLMS.from_xml(item.xpath("adlcp:dataFromLMS")).data).to eq("some data here")
     end
   end
 end

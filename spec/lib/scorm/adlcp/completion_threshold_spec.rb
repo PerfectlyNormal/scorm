@@ -12,15 +12,15 @@ describe Scorm::Adlcp::CompletionThreshold do
       subject(:threshold) { Scorm::Adlcp::CompletionThreshold.from_xml(doc) }
 
       it "should read 'completedByMeasure'" do
-        threshold.completed_by_measure.should be_true
+        expect(threshold.completed_by_measure).to be_truthy
       end
 
       it "should read 'minProgressMeasure'" do
-        threshold.min_progress_measure.should eq(0.5)
+        expect(threshold.min_progress_measure).to eq(0.5)
       end
 
       it "should read 'progressWeight'" do
-        threshold.progress_weight.should eq(0.8)
+        expect(threshold.progress_weight).to eq(0.8)
       end
     end
 
@@ -31,22 +31,22 @@ describe Scorm::Adlcp::CompletionThreshold do
       subject(:threshold) { Scorm::Adlcp::CompletionThreshold.from_xml(doc) }
 
       it "should use the default for 'completedByMeasure'" do
-        threshold.completed_by_measure.should be_false
+        expect(threshold.completed_by_measure).to be_falsey
       end
 
       it "should use the default for 'minProgressMeasure'" do
-        threshold.min_progress_measure.should eq(1.0)
+        expect(threshold.min_progress_measure).to eq(1.0)
       end
 
       it "should use the default for 'progressWeight'" do
-        threshold.progress_weight.should eq(1.0)
+        expect(threshold.progress_weight).to eq(1.0)
       end
     end
 
     describe "with invalid data" do
       it "should return nil if no element is given" do
         xml = xml_organization_item("").xpath("//adlcp:completionThreshold")
-        Scorm::Adlcp::CompletionThreshold.from_xml(xml).should be_nil
+        expect(Scorm::Adlcp::CompletionThreshold.from_xml(xml)).to be_nil
       end
 
       it "should throw an error if more than one element is given" do
@@ -64,15 +64,15 @@ describe Scorm::Adlcp::CompletionThreshold do
 
   describe "default values" do
     it "should default 'completedByMeasure' to false" do
-      subject.completed_by_measure.should be_false
+      expect(subject.completed_by_measure).to be_falsey
     end
 
     it "should default 'minProgressMeasure' to 1.0" do
-      subject.min_progress_measure.should eq(1.0)
+      expect(subject.min_progress_measure).to eq(1.0)
     end
 
     it "should default 'progressWeight' to 1.0" do
-      subject.progress_weight.should eq(1.0)
+      expect(subject.progress_weight).to eq(1.0)
     end
   end
 
@@ -83,12 +83,12 @@ describe Scorm::Adlcp::CompletionThreshold do
 
       invalid.each do |value|
         subject.min_progress_measure = value
-        subject.should_not be_valid
+        expect(subject).not_to be_valid
       end
 
       valid.each do |value|
         subject.min_progress_measure = value
-        subject.should be_valid
+        expect(subject).to be_valid
       end
     end
 
@@ -98,12 +98,12 @@ describe Scorm::Adlcp::CompletionThreshold do
 
       invalid.each do |value|
         subject.progress_weight = value
-        subject.should_not be_valid
+        expect(subject).not_to be_valid
       end
 
       valid.each do |value|
         subject.progress_weight = value
-        subject.should be_valid
+        expect(subject).to be_valid
       end
     end
 

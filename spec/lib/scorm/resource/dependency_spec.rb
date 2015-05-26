@@ -8,7 +8,7 @@ describe Scorm::Resource::Dependency do
       xml = doc.xpath("//xmlns:dependency")[0] # Keep it simple, avoid too much traversal
       dep = Scorm::Resource::Dependency.from_xml(xml)
 
-      dep.identifierref.should eq("assets")
+      expect(dep.identifierref).to eq("assets")
     end
   end
 

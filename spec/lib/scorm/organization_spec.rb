@@ -7,27 +7,27 @@ describe Scorm::Organization do
 
   describe ".from_xml" do
     it "reads the identifier" do
-      Scorm::Organization.from_xml(doc).identifier.should eq("default_org")
+      expect(Scorm::Organization.from_xml(doc).identifier).to eq("default_org")
     end
 
     it "reads the 'structure' attribute" do
-      Scorm::Organization.from_xml(doc).structure.should eq("not-really-normal")
+      expect(Scorm::Organization.from_xml(doc).structure).to eq("not-really-normal")
     end
 
     it "reads the 'adlseq:objectivesGlobalToSystem' attribute" do
       org = Scorm::Organization.from_xml(doc)
-      org.adlseq_objectives_global_to_system.should be_false
+      expect(org.adlseq_objectives_global_to_system).to be_falsey
     end
 
     it "reads the 'adlcp:sharedDataGlobalToSystem' attribute" do
       org = Scorm::Organization.from_xml(doc)
-      org.adlcp_shared_data_global_to_system.should be_false
+      expect(org.adlcp_shared_data_global_to_system).to be_falsey
     end
 
     describe "child elements" do
       it "reads <title>" do
         org = Scorm::Organization.from_xml(doc)
-        org.title.should eq("Default Organization")
+        expect(org.title).to eq("Default Organization")
       end
 
       it "raises an error unless one, and only one, <title> element exists" do
@@ -48,8 +48,8 @@ describe Scorm::Organization do
         orgsrc = doc.xpath("//xmlns:organization")[0]
         org    = Scorm::Organization.from_xml(orgsrc)
 
-        org.items.should_not be_empty
-        org.items.collect(&:identifier).should_not include("nested-item")
+        expect(org.items).not_to be_empty
+        expect(org.items.collect(&:identifier)).not_to include("nested-item")
       end
     end
 
@@ -63,15 +63,15 @@ describe Scorm::Organization do
   end
 
   it "defaults to 'hierarchical' for the structure attribute" do
-    Scorm::Organization.new.structure.should eq("hierarchical")
+    expect(Scorm::Organization.new.structure).to eq("hierarchical")
   end
 
   it "defaults to 'true' for adlseq:objectivesGlobalToSystem" do
-    Scorm::Organization.new.adlseq_objectives_global_to_system.should be_true
+    expect(Scorm::Organization.new.adlseq_objectives_global_to_system).to be_truthy
   end
 
   it "defaults to 'true' for adlcp:sharedDataGlobalToSystem" do
-    Scorm::Organization.new.adlcp_shared_data_global_to_system.should be_true
+    expect(Scorm::Organization.new.adlcp_shared_data_global_to_system).to be_truthy
   end
 
   describe "equality" do
@@ -82,7 +82,7 @@ describe Scorm::Organization do
       org1.identifier = "default_org"
       org2.identifier = "default_org"
 
-      org1.should eq(org2)
+      expect(org1).to eq(org2)
     end
 
     it "should not be equal if they have different identifiers" do
@@ -92,25 +92,25 @@ describe Scorm::Organization do
       org1.identifier = "default_org"
       org2.identifier = "alternate_org"
 
-      org1.should_not eq(org2)
+      expect(org1).not_to eq(org2)
     end
   end
 
   describe "#valid?" do
     it "should be valid with an identifier" do
       org = Scorm::Organization.new(title: Scorm::Title.new(title: "Doesn't matter"))
-      org.should_not be_valid
+      expect(org).not_to be_valid
 
       org.identifier = "my-first-organization"
-      org.should be_valid
+      expect(org).to be_valid
     end
 
     it "should require a title" do
       org = Scorm::Organization.new(identifier: "doesntmatter")
-      org.should_not be_valid
+      expect(org).not_to be_valid
 
       org.title = Scorm::Title.new(title: "My first Organization")
-      org.should be_valid
+      expect(org).to be_valid
     end
   end
 end

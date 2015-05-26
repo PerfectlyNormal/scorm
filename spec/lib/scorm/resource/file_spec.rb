@@ -8,7 +8,7 @@ describe Scorm::Resource::File do
       xml  = doc.xpath("//xmlns:file")[0] # Keep it simple, avoid traversing everything
       file = Scorm::Resource::File.from_xml(xml)
 
-      file.href.should eq("example.html")
+      expect(file.href).to eq("example.html")
     end
   end
 
@@ -16,10 +16,10 @@ describe Scorm::Resource::File do
     it "should require the href attribute" do
       file = Scorm::Resource::File.new
       file.href = ""
-      file.should_not be_valid
+      expect(file).not_to be_valid
 
       file.href = "example.html"
-      file.should be_valid
+      expect(file).to be_valid
     end
   end
 end

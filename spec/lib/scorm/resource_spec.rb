@@ -10,23 +10,23 @@ describe Scorm::Resource do
       let(:resource) { Scorm::Resource.from_xml(resource_doc) }
 
       it "should set identifier" do
-        resource.identifier.should eq("RES")
+        expect(resource.identifier).to eq("RES")
       end
 
       it "should set type" do
-        resource.type.should eq("webcontent")
+        expect(resource.type).to eq("webcontent")
       end
 
       it "should set href" do
-        resource.href.should eq("example.html")
+        expect(resource.href).to eq("example.html")
       end
 
       it "should set adlcp:scormType" do
-        resource.adlcp_scorm_type.should eq("sco")
+        expect(resource.adlcp_scorm_type).to eq("sco")
       end
 
       it "should set xml:base" do
-        resource.xml_base.should eq("http://localhost/")
+        expect(resource.xml_base).to eq("http://localhost/")
       end
 
       it "should parse metadata"
@@ -39,14 +39,14 @@ describe Scorm::Resource do
         let(:resource) { Scorm::Resource.from_xml(resource_doc) }
 
         it "should have 2 files" do
-          resource.files.should_not be_empty
-          resource.files.length.should eq(2)
+          expect(resource.files).not_to be_empty
+          expect(resource.files.length).to eq(2)
         end
 
         it "should have been parsed correctly" do
           hrefs = resource.files.collect(&:href)
-          hrefs.should include("example.html")
-          hrefs.should include("example.jpg")
+          expect(hrefs).to include("example.html")
+          expect(hrefs).to include("example.jpg")
         end
       end
 
@@ -59,12 +59,12 @@ describe Scorm::Resource do
         let(:resource) { Scorm::Resource.from_xml(resource_doc) }
 
         it "should have 1 dependency" do
-          resource.dependencies.should_not be_empty
-          resource.dependencies.length.should eq(1)
+          expect(resource.dependencies).not_to be_empty
+          expect(resource.dependencies.length).to eq(1)
         end
 
         it "should have been parsed correctly" do
-          resource.dependencies[0].identifierref.should eq("assets")
+          expect(resource.dependencies[0].identifierref).to eq("assets")
         end
 
       end
@@ -78,43 +78,43 @@ describe Scorm::Resource do
     let(:resource) { Scorm::Resource.from_xml(resource_doc) }
 
     it "should start out valid" do
-      resource.should be_valid
+      expect(resource).to be_valid
     end
 
     it "should require the identifier to be present" do
       resource.identifier = ""
-      resource.should_not be_valid
+      expect(resource).not_to be_valid
     end
 
     it "should require the type to be present" do
       resource.type = ""
-      resource.should_not be_valid
+      expect(resource).not_to be_valid
     end
 
     it "should not require href to be present" do
       resource.href = ""
-      resource.should be_valid
+      expect(resource).to be_valid
     end
 
     it "should not require xml:base to be present" do
       resource.xml_base = ""
-      resource.should be_valid
+      expect(resource).to be_valid
     end
 
     it "should require adlcp:scormType to be present" do
       resource.adlcp_scorm_type = ""
-      resource.should_not be_valid
+      expect(resource).not_to be_valid
     end
 
     it "should require adlcp:scormType to be set to 'sco' or 'asset'" do
       resource.adlcp_scorm_type = "sco"
-      resource.should be_valid
+      expect(resource).to be_valid
 
       resource.adlcp_scorm_type = "asset"
-      resource.should be_valid
+      expect(resource).to be_valid
 
       resource.adlcp_scorm_type = "whatisthis"
-      resource.should_not be_valid
+      expect(resource).not_to be_valid
     end
 
     # FIXME: The spec says that if an item references this resource,

@@ -27,27 +27,27 @@ describe Scorm::Manifest do
     it "should not raise an exception when given a supported version" do
       expect {
         Scorm::Manifest.parse(scorm_manifest("version_scorm_2004_4th"))
-      }.to_not raise_error(Scorm::Errors::UnsupportedSCORMVersion)
+      }.to_not raise_error
     end
 
     it "should correctly read the supported version" do
       manifest = Scorm::Manifest.parse(scorm_manifest("version_scorm_2004_4th"))
-      manifest.schema.should eq("ADL SCORM")
-      manifest.schemaversion.should eq("2004 4th Edition")
+      expect(manifest.schema).to eq("ADL SCORM")
+      expect(manifest.schemaversion).to eq("2004 4th Edition")
     end
   end
 
   it "should parse each defined resource" do
     manifest = Scorm::Manifest.parse(scorm_manifest("valid_resource"))
-    manifest.resources.should_not be_empty
-    manifest.resources.length.should eq(1)
-    manifest.resources[0].should be_a(Scorm::Resource)
+    expect(manifest.resources).not_to be_empty
+    expect(manifest.resources.length).to eq(1)
+    expect(manifest.resources[0]).to be_a(Scorm::Resource)
   end
 
   describe "the organization set" do
     it "should be parsed" do
       manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
-      manifest.organization_set.should_not be_nil
+      expect(manifest.organization_set).not_to be_nil
     end
 
     it "should throw an exception if no organization set was found" do
@@ -64,9 +64,9 @@ describe Scorm::Manifest do
 
     it "should delegate organization queries here" do
       manifest = Scorm::Manifest.parse(scorm_manifest("one_organization"))
-      manifest.organizations.should_not be_empty
-      manifest.organizations.length.should eq(1)
-      manifest.organizations[0].should be_a(Scorm::Organization)
+      expect(manifest.organizations).not_to be_empty
+      expect(manifest.organizations.length).to eq(1)
+      expect(manifest.organizations[0]).to be_a(Scorm::Organization)
     end
   end
 end

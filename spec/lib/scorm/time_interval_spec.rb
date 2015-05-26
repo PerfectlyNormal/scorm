@@ -5,26 +5,26 @@ describe Scorm::TimeInterval do
   describe ".parse" do
     it "defaults to 0 for undefined values" do
       interval = Scorm::TimeInterval.parse("PT0S")
-      interval.years.should eq(0)
-      interval.months.should eq(0)
-      interval.days.should eq(0)
-      interval.hours.should eq(0)
-      interval.minutes.should eq(0)
-      interval.seconds.should eq(0.0)
+      expect(interval.years).to eq(0)
+      expect(interval.months).to eq(0)
+      expect(interval.days).to eq(0)
+      expect(interval.hours).to eq(0)
+      expect(interval.minutes).to eq(0)
+      expect(interval.seconds).to eq(0.0)
     end
 
     it "understands the long example in the SCORM specification" do
       interval = Scorm::TimeInterval.parse("P1Y3M2DT3H")
-      interval.years.should eq(1)
-      interval.months.should eq(3)
-      interval.days.should eq(2)
-      interval.hours.should eq(3)
+      expect(interval.years).to eq(1)
+      expect(interval.months).to eq(3)
+      expect(interval.days).to eq(2)
+      expect(interval.hours).to eq(3)
     end
 
     it "understands the short example" do
       interval = Scorm::TimeInterval.parse("PT3H5M")
-      interval.hours.should eq(3)
-      interval.minutes.should eq(5)
+      expect(interval.hours).to eq(3)
+      expect(interval.minutes).to eq(5)
     end
 
     it "raises an error when given invalid data" do
@@ -51,7 +51,7 @@ describe Scorm::TimeInterval do
         3600*24*365.25*10 => 10
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should eq(expected), "Expected #{seconds} seconds to equal #{expected} years"
+        expect(interval.years).to eq(expected), "Expected #{seconds} seconds to equal #{expected} years"
       end
     end
 
@@ -64,8 +64,8 @@ describe Scorm::TimeInterval do
         3600*24*31*10 => 10
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should be_zero, "Expected #{seconds} seconds to return zero years"
-        interval.months.should eq(expected), "Expected #{seconds} seconds to equal #{expected} months"
+        expect(interval.years).to be_zero, "Expected #{seconds} seconds to return zero years"
+        expect(interval.months).to eq(expected), "Expected #{seconds} seconds to equal #{expected} months"
       end
     end
 
@@ -78,9 +78,9 @@ describe Scorm::TimeInterval do
         3600*24*10 => 10
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should be_zero, "Expected #{seconds} seconds to return zero years"
-        interval.months.should be_zero, "Expected #{seconds} seconds to return zero months"
-        interval.days.should eq(expected), "Expected #{seconds} seconds to equal #{expected} days"
+        expect(interval.years).to be_zero, "Expected #{seconds} seconds to return zero years"
+        expect(interval.months).to be_zero, "Expected #{seconds} seconds to return zero months"
+        expect(interval.days).to eq(expected), "Expected #{seconds} seconds to equal #{expected} days"
       end
     end
 
@@ -93,10 +93,10 @@ describe Scorm::TimeInterval do
         3600*10 => 10
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should be_zero, "Expected #{seconds} seconds to return zero years"
-        interval.months.should be_zero, "Expected #{seconds} seconds to return zero months"
-        interval.days.should be_zero, "Expected #{seconds} seconds to return zero days"
-        interval.hours.should eq(expected), "Expected #{seconds} seconds to equal #{expected} hours"
+        expect(interval.years).to be_zero, "Expected #{seconds} seconds to return zero years"
+        expect(interval.months).to be_zero, "Expected #{seconds} seconds to return zero months"
+        expect(interval.days).to be_zero, "Expected #{seconds} seconds to return zero days"
+        expect(interval.hours).to eq(expected), "Expected #{seconds} seconds to equal #{expected} hours"
       end
     end
 
@@ -109,11 +109,11 @@ describe Scorm::TimeInterval do
         600 => 10
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should be_zero, "Expected #{seconds} seconds to return zero years"
-        interval.months.should be_zero, "Expected #{seconds} seconds to return zero months"
-        interval.days.should be_zero, "Expected #{seconds} seconds to return zero days"
-        interval.hours.should be_zero, "Expected #{seconds} seconds to equal zero hours"
-        interval.minutes.should eq(expected), "Expected #{seconds} seconds to equal #{expected} minutes"
+        expect(interval.years).to be_zero, "Expected #{seconds} seconds to return zero years"
+        expect(interval.months).to be_zero, "Expected #{seconds} seconds to return zero months"
+        expect(interval.days).to be_zero, "Expected #{seconds} seconds to return zero days"
+        expect(interval.hours).to be_zero, "Expected #{seconds} seconds to equal zero hours"
+        expect(interval.minutes).to eq(expected), "Expected #{seconds} seconds to equal #{expected} minutes"
       end
     end
 
@@ -126,12 +126,12 @@ describe Scorm::TimeInterval do
         2.8 => 2.8
       }.each_pair do |seconds, expected|
         interval = Scorm::TimeInterval.from_seconds(seconds)
-        interval.years.should be_zero, "Expected #{seconds} seconds to return zero years"
-        interval.months.should be_zero, "Expected #{seconds} seconds to return zero months"
-        interval.days.should be_zero, "Expected #{seconds} seconds to return zero days"
-        interval.hours.should be_zero, "Expected #{seconds} seconds to equal zero hours"
-        interval.minutes.should be_zero, "Expected #{seconds} seconds to equal zero minutes"
-        interval.seconds.should eq(expected)
+        expect(interval.years).to be_zero, "Expected #{seconds} seconds to return zero years"
+        expect(interval.months).to be_zero, "Expected #{seconds} seconds to return zero months"
+        expect(interval.days).to be_zero, "Expected #{seconds} seconds to return zero days"
+        expect(interval.hours).to be_zero, "Expected #{seconds} seconds to equal zero hours"
+        expect(interval.minutes).to be_zero, "Expected #{seconds} seconds to equal zero minutes"
+        expect(interval.seconds).to eq(expected)
       end
     end
   end
@@ -140,33 +140,33 @@ describe Scorm::TimeInterval do
     it "should discard decimals if they are not needed" do
       i = Scorm::TimeInterval.new
       i.seconds = 3.00
-      i.seconds.should eq(3)
+      expect(i.seconds).to eq(3)
     end
 
     it "should be limited to two decimals" do
       i = Scorm::TimeInterval.new
       i.seconds = 3.1415
-      i.seconds.should eq(3.14)
+      expect(i.seconds).to eq(3.14)
     end
   end
 
   describe "#to_s" do
     it "returns a blank interval when given nothing" do
-      Scorm::TimeInterval.new.to_s.should eq("PT0S")
+      expect(Scorm::TimeInterval.new.to_s).to eq("PT0S")
     end
 
     it "should result in the same string given to .parse" do
-      Scorm::TimeInterval.parse("PT3H5M").to_s.should eq("PT3H5M")
+      expect(Scorm::TimeInterval.parse("PT3H5M").to_s).to eq("PT3H5M")
     end
 
     it "should strip out zeroes" do
-      Scorm::TimeInterval.parse("PT003H05M5.00S").to_s.should eq("PT3H5M5S")
+      expect(Scorm::TimeInterval.parse("PT003H05M5.00S").to_s).to eq("PT3H5M5S")
     end
   end
 
   describe "#to_f" do
     it "returns 0 when given nothing" do
-      Scorm::TimeInterval.new.to_f.should eq(0)
+      expect(Scorm::TimeInterval.new.to_f).to eq(0)
     end
 
     it "returns the same number as given to .from_seconds" do
@@ -175,7 +175,7 @@ describe Scorm::TimeInterval do
         if interval.to_f != seconds
           puts interval.to_s
         end
-        interval.to_f.should eq(seconds), "Expected #{seconds} seconds, got #{interval.to_f}"
+        expect(interval.to_f).to eq(seconds), "Expected #{seconds} seconds, got #{interval.to_f}"
       end
     end
   end

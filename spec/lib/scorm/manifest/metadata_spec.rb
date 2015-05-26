@@ -6,8 +6,8 @@ describe Scorm::Manifest::Metadata do
     it "reads the important bits" do
       doc = xml_scorm_manifest("version_scorm_2004_4th")
       metadata = Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      metadata.schema.should eq("ADL SCORM")
-      metadata.schemaversion.should eq("2004 4th Edition")
+      expect(metadata.schema).to eq("ADL SCORM")
+      expect(metadata.schemaversion).to eq("2004 4th Edition")
     end
 
     it "should raise an exception if no metadata element exists" do
@@ -28,7 +28,7 @@ describe Scorm::Manifest::Metadata do
       doc = xml_scorm_manifest("version_scorm_2004_4th")
       expect {
         Scorm::Manifest::Metadata.from_xml(doc.xpath("/xmlns:manifest/xmlns:metadata"))
-      }.to_not raise_error(Scorm::Errors::InvalidManifest)
+      }.to_not raise_error
     end
   end
 
