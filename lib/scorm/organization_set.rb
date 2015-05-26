@@ -37,7 +37,7 @@ require 'scorm/organization'
 #   * <organization>
 #
 class Scorm::OrganizationSet
-  include Virtus
+  include Virtus.model
 
   def self.from_xml(data)
     raise Scorm::Errors::NoOrganizationsError.new(
@@ -48,7 +48,7 @@ class Scorm::OrganizationSet
     ) if data.length > 1
 
     instance = new
-    instance.default = data.try(:attr, "default")
+    instance.default = data.attr('default')
     data.xpath("xmlns:organization").each do |org|
       instance.organizations.push(Scorm::Organization.from_xml(org))
     end

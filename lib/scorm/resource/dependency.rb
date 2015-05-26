@@ -32,7 +32,7 @@
 #
 class Scorm::Resource
   class Dependency
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       instance = new

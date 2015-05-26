@@ -88,7 +88,7 @@ require 'scorm/resource/file'
 #   * <dependency>
 #
 class Scorm::Resource
-  include Virtus
+  include Virtus.model
   VALID_SCORM_TYPES = ['sco', 'asset'].freeze
 
   def self.from_xml(data)

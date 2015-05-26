@@ -91,7 +91,7 @@ require 'scorm/title'
 #
 class Scorm::Organization
   class Item
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       instance = new

@@ -23,7 +23,7 @@ require 'scorm/errors'
 #   XML Data Type: xs:string.
 #
 class Scorm::Title
-  include Virtus::ValueObject
+  include Virtus.value_object
   extend Forwardable
 
   def self.from_xml(title, parent)
@@ -37,7 +37,9 @@ class Scorm::Title
     new(title: title.text)
   end
 
-  attribute :title, String
+  values do
+    attribute :title, String
+  end
 
   def_delegators :title, :to_s, :hash, :eql, :==
 end

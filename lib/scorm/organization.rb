@@ -64,7 +64,7 @@ require 'scorm/organization/item'
 #   * <imsss:sequencing>
 #
 class Scorm::Organization
-  include Virtus
+  include Virtus.model
 
   def self.from_xml(data)
     instance = new

@@ -59,7 +59,7 @@ require 'scorm/errors'
 #
 module Scorm::Adlcp
   class CompletionThreshold
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       return nil if data.nil? || data.length == 0

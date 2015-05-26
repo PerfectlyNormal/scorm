@@ -53,7 +53,7 @@
 #
 class Scorm::Resource
   class File
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       instance = new

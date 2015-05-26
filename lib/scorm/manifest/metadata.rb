@@ -1,6 +1,6 @@
 class Scorm::Manifest
   class Metadata
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(document)
       raise Scorm::Errors::NoMetadataError.new(

@@ -55,7 +55,7 @@ require 'scorm/errors'
 #
 module Scorm::Adlcp
   class TimeLimitAction
-    include Virtus
+    include Virtus.model
     extend Forwardable
     VALID_ACTIONS = ["exit,message", "exit,no message",
                      "continue,message", "continue,no message"]

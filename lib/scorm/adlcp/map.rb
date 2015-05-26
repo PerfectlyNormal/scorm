@@ -40,7 +40,7 @@ require 'scorm/errors'
 #
 module Scorm::Adlcp
   class Map
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       instance = new

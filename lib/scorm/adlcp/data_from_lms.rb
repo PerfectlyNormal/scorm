@@ -38,7 +38,7 @@ require 'scorm/errors'
 #
 module Scorm::Adlcp
   class DataFromLMS
-    include Virtus
+    include Virtus.model
     extend Forwardable
 
     def self.from_xml(data)

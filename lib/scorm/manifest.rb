@@ -5,7 +5,7 @@ require 'scorm/organization_set'
 require 'scorm/resource'
 
 class Scorm::Manifest
-  include Virtus
+  include Virtus.model
   extend Forwardable
 
   VALID_SCORM_VERSIONS     = ['2004 4th Edition', '2004 3rd Edition', 'CAM 1.3', '1.2']

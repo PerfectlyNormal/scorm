@@ -33,7 +33,7 @@ require 'scorm/adlcp/map'
 #
 module Scorm::Adlcp
   class Data
-    include Virtus
+    include Virtus.model
 
     def self.from_xml(data)
       return nil if data.nil? || data.length == 0
