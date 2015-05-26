@@ -41,6 +41,19 @@ unless manifest.organizations.empty?
       item_arm += last_organization ? "    "  : "│   "
 
       line item, last_item, item_arm
+
+      descendants = [
+        item.adlcp_time_limit_action,
+        item.adlcp_data_from_lms,
+        item.adlcp_data,
+        item.adlcp_completion_threshold,
+      ].compact
+      descendants.each_with_index do |descendant, des_index|
+        des_arm  = has_resources     ? "│  " : "   "
+        des_arm += last_organization ? "  "  : "│ "
+        last_descendant = des_index == (descendants.length-1)
+        line descendant, last_descendant, item_arm + des_arm
+      end
     end
   end
 end
